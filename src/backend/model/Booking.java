@@ -9,9 +9,11 @@ public class Booking {
     private int totalPrice;
     private String bookingStatus;
 
-    public Booking() {}
+    public Booking() {
+    }
 
-    public Booking(int bookingID, int userID, int carID, String pickupDate, String returnDate, int totalPrice, String bookingStatus){
+    public Booking(int bookingID, int userID, int carID, String pickupDate, String returnDate, int totalPrice,
+            String bookingStatus) {
         this.bookingID = bookingID;
         this.userID = userID;
         this.carID = carID;
@@ -21,7 +23,7 @@ public class Booking {
         this.bookingStatus = bookingStatus;
     }
 
-    public Booking(int userID, int carID, String pickupDate, String returnDate, int totalPrice, String bookingStatus){
+    public Booking(int userID, int carID, String pickupDate, String returnDate, int totalPrice, String bookingStatus) {
         this.userID = userID;
         this.carID = carID;
         this.pickupDate = pickupDate;
@@ -53,29 +55,37 @@ public class Booking {
     public int getTotalPrice() {
         return totalPrice;
     }
+
     public String getBookingStatus() {
         return bookingStatus;
     }
+
     public void setBookingID(int bookingID) {
         this.bookingID = bookingID;
     }
+
     public void setUserID(int userID) {
         this.userID = userID;
     }
+
     public void setCarID(int carID) {
         this.carID = carID;
     }
+
     public void setPickupDate(String pickupDate) {
         this.pickupDate = pickupDate;
     }
+
     public void setReturnDate(String returnDate) {
         this.returnDate = returnDate;
     }
+
     public void setTotalPrice(int totalPrice) {
         this.totalPrice = totalPrice;
     }
+
     public void setBookingStatus(String bookingStatus) {
         this.bookingStatus = bookingStatus;
     }
-    
+
 }
