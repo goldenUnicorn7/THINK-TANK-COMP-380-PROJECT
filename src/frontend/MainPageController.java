@@ -1,12 +1,13 @@
 package frontend;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
-
+import javafx.stage.Stage;
 import java.io.IOException;
-
-import org.w3c.dom.Node;
-
 import javafx.event.ActionEvent;
 
 public class MainPageController {
