@@ -8,20 +8,10 @@
             "mainClass": "Main",
             "classPaths": [
                 "${workspaceFolder}/src",
-                "${workspaceFolder}/library/mysql-connector-j-9.6.0.jar"
+                "${workspaceFolder}/library/mysql-connector-j-9.6.0.jar",
+                "C:/javafx-sdk-21.0.11/lib/*.jar"
             ],
-            "vmArgs": "--module-path \"C:/javafx-sdk-26.0.1/lib\" --add-modules javafx.controls,javafx.fxml"
-        },
-        {
-            "type": "java",
-            "name": "Test Login Backend",
-            "request": "launch",
-            "mainClass": "TestLoginBackend",
-            "classPaths": [
-                "${workspaceFolder}/src",
-                "${workspaceFolder}/library/mysql-connector-j-9.6.0.jar"
-            ]
+            "vmArgs": "--module-path \"C:/javafx-sdk-21.0.11/lib\" --add-modules javafx.controls,javafx.fxml"
         }
     ]
 }
-   
