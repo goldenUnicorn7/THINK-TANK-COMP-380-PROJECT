@@ -14,7 +14,7 @@ import javafx.stage.Stage;
 public class CartViewController {
     
     @FXML
-    private TableView userCartTableView;
+    private TableView<String> userCartTableView;
 
     private Parent root;
     private Stage stage;

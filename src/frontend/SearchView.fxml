@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.SearchViewController">
+   <children>
+      <TextField fx:id="searchLabel" layoutX="31.0" layoutY="29.0" />
+      <Button fx:id="searchCars" layoutX="195.0" layoutY="29.0" mnemonicParsing="false" onAction="#searchAvailableCars" text="Search" />
+      <TableView layoutX="25.0" layoutY="67.0" prefHeight="275.0" prefWidth="557.0">
+        <columns>
+          <TableColumn prefWidth="132.0" text="Model" />
+          <TableColumn prefWidth="135.0" text="Price" />
+            <TableColumn prefWidth="136.0" text="Mileage" />
+            <TableColumn prefWidth="153.0" text="Availability" />
+        </columns>
+      </TableView>
+      <Button fx:id="mainPageButton" layoutX="502.0" layoutY="29.0" mnemonicParsing="false" onAction="#goToMainPage" text="Main Menu" />
+   </children>
+</AnchorPane>
