@@ -30,7 +30,19 @@ public class CartViewController {
         stage.setScene(scene);
         stage.show();
 
+    }
+
+    @FXML
+    public void checkOut(ActionEvent event) throws IOException{
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("CheckOutScreen.fxml"));
+        root = loader.load();
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
 
     }
+
 
 }
