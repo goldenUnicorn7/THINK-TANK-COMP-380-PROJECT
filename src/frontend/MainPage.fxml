@@ -5,8 +5,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.MainPageController">
    <children>
       <Label layoutY="29.0" prefHeight="17.0" prefWidth="600.0" text="     Car Rental">
          <font>
@@ -19,6 +18,6 @@
          </font>
       </Button>
       <Button fx:id="cartButton" layoutX="499.0" layoutY="30.0" mnemonicParsing="false" onAction="#goToCart" prefHeight="3.0" prefWidth="87.0" text="Your Cart" />
-      <Button fx:id="searchBar" layoutX="406.0" layoutY="30.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="74.0" text="Search " />
+      <Button fx:id="searchButton" layoutX="406.0" layoutY="30.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="74.0" text="Search " />
    </children>
 </AnchorPane>
