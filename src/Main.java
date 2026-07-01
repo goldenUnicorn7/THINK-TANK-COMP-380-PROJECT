@@ -1,15 +1,27 @@
-import backend.db.DBConnection;
-import java.sql.Connection;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
-public class Main {
-    public static void main(String[] args) {
+public class Main extends Application {
+
+    @Override
+    public void start(Stage stage) {
         try {
-            Connection conn = DBConnection.getConnection();
-            System.out.println("Database connected successfully!");
-            conn.close();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/frontend/LoginScreenView.fxml"));
+            Scene scene = new Scene(loader.load());
+
+            stage.setTitle("Login");
+            stage.setScene(scene);
+            stage.show();
+
         } catch (Exception e) {
-            System.out.println("Database connection failed!");
+            System.out.println("Failed to load LoginScreenView.fxml");
             e.printStackTrace();
         }
+    }
+
+    public static void main(String[] args) {
+        launch(args);
     }
 }
