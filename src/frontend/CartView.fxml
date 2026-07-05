@@ -7,29 +7,48 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.CartViewController">
-   <children>
-      <Label layoutX="14.0" layoutY="12.0" prefHeight="36.0" prefWidth="572.0" text="Your Cart:">
-         <font>
-            <Font size="25.0" />
-         </font>
-      </Label>
-      <TableView fx:id="userCart" editable="true" layoutX="14.0" layoutY="48.0" prefHeight="282.0" prefWidth="572.0">
-        <columns>
-          <TableColumn prefWidth="179.0" text="Model" />
-          <TableColumn prefWidth="201.0" text="Price" />
-            <TableColumn prefWidth="191.0" text="Mileage" />
-        </columns>
-      </TableView>
-      <Button fx:id="checkoutButton" layoutX="486.0" layoutY="346.0" mnemonicParsing="false" onAction="#checkOut" text="Checkout">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </Button>
-      <Button fx:id="cartToMainMenu" layoutX="14.0" layoutY="346.0" mnemonicParsing="false" onAction="#goToMainMenu" text="Go To Main Menu">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </Button>
-   </children>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity"
+            minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="400.0" prefWidth="600.0"
+            xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="frontend.CartViewController">
+
+    <children>
+        <Label alignment="CENTER"
+               layoutX="0.0"
+               layoutY="20.0"
+               prefHeight="40.0"
+               prefWidth="600.0"
+               text="Your Cart">
+            <font>
+                <Font size="26.0" />
+            </font>
+        </Label>
+
+        <TableView fx:id="userCartTableView"
+                   layoutX="50.0"
+                   layoutY="85.0"
+                   prefHeight="220.0"
+                   prefWidth="500.0">
+            <columns>
+                <TableColumn prefWidth="125.0" text="Car" />
+                <TableColumn prefWidth="125.0" text="Model" />
+                <TableColumn prefWidth="125.0" text="Days" />
+                <TableColumn prefWidth="125.0" text="Total" />
+            </columns>
+        </TableView>
+
+        <Button layoutX="180.0"
+                layoutY="335.0"
+                mnemonicParsing="false"
+                text="Main Menu"
+                onAction="#goToMainMenu" />
+
+        <Button layoutX="310.0"
+                layoutY="335.0"
+                mnemonicParsing="false"
+                text="Checkout"
+                onAction="#checkOut" />
+    </children>
 </AnchorPane>

@@ -5,19 +5,50 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.MainPageController">
-   <children>
-      <Label layoutY="29.0" prefHeight="17.0" prefWidth="600.0" text="     Car Rental">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <Button fx:id="viewCars" layoutX="14.0" layoutY="78.0" mnemonicParsing="false" text="View Available Cars">
-         <font>
-            <Font size="13.0" />
-         </font>
-      </Button>
-      <Button fx:id="cartButton" layoutX="499.0" layoutY="30.0" mnemonicParsing="false" onAction="#goToCart" prefHeight="3.0" prefWidth="87.0" text="Your Cart" />
-      <Button fx:id="searchButton" layoutX="406.0" layoutY="30.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="74.0" text="Search " />
-   </children>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity"
+            minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="400.0" prefWidth="600.0"
+            xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="frontend.MainPageController">
+
+    <children>
+        <Label alignment="CENTER"
+               layoutX="0.0"
+               layoutY="40.0"
+               prefHeight="40.0"
+               prefWidth="600.0"
+               text="Main Menu">
+            <font>
+                <Font size="28.0" />
+            </font>
+        </Label>
+
+        <Button fx:id="searchButton"
+                layoutX="225.0"
+                layoutY="130.0"
+                mnemonicParsing="false"
+                prefHeight="35.0"
+                prefWidth="150.0"
+                text="Search Cars"
+                onAction="#goToSearch" />
+
+        <Button fx:id="cartButton"
+                layoutX="225.0"
+                layoutY="190.0"
+                mnemonicParsing="false"
+                prefHeight="35.0"
+                prefWidth="150.0"
+                text="View Cart"
+                onAction="#goToCart" />
+
+        <Button fx:id="viewCars"
+                layoutX="225.0"
+                layoutY="250.0"
+                mnemonicParsing="false"
+                prefHeight="35.0"
+                prefWidth="150.0"
+                text="Available Cars"
+                onAction="#goToAvailableCars" />
+    </children>
 </AnchorPane>
