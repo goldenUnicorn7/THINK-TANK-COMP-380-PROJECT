@@ -1,4 +1,5 @@
 package backend.model;
+import java.math.BigDecimal;
 
 public class Booking {
     private int bookingID;
@@ -6,13 +7,13 @@ public class Booking {
     private int carID;
     private String pickupDate;
     private String returnDate;
-    private int totalPrice;
+    private BigDecimal totalPrice;
     private String bookingStatus;
 
     public Booking() {
     }
 
-    public Booking(int bookingID, int userID, int carID, String pickupDate, String returnDate, int totalPrice,
+    public Booking(int bookingID, int userID, int carID, String pickupDate, String returnDate, BigDecimal totalPrice,
             String bookingStatus) {
         this.bookingID = bookingID;
         this.userID = userID;
@@ -23,7 +24,7 @@ public class Booking {
         this.bookingStatus = bookingStatus;
     }
 
-    public Booking(int userID, int carID, String pickupDate, String returnDate, int totalPrice, String bookingStatus) {
+    public Booking(int userID, int carID, String pickupDate, String returnDate, BigDecimal totalPrice, String bookingStatus) {
         this.userID = userID;
         this.carID = carID;
         this.pickupDate = pickupDate;
@@ -52,7 +53,7 @@ public class Booking {
         return returnDate;
     }
 
-    public int getTotalPrice() {
+    public BigDecimal getTotalPrice() {
         return totalPrice;
     }
 
@@ -80,7 +81,7 @@ public class Booking {
         this.returnDate = returnDate;
     }
 
-    public void setTotalPrice(int totalPrice) {
+    public void setTotalPrice(BigDecimal totalPrice) {
         this.totalPrice = totalPrice;
     }
 
