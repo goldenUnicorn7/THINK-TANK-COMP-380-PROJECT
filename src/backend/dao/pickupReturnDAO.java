@@ -11,7 +11,8 @@ import java.sql.Timestamp;
 
 public class PickupReturnDAO {
 
-    public PickupReturnDAO() {}
+    public PickupReturnDAO() {
+    }
 
     public boolean insertPickupReturn(PickupReturn pickupReturn) {
 
@@ -37,6 +38,7 @@ public class PickupReturnDAO {
             return false;
         }
     }
+
     public PickupReturn getPickupReturnByBookingId(int bookingId) {
 
         String sql = "SELECT * FROM Pickup_Return WHERE BookingID = ?";
@@ -46,17 +48,18 @@ public class PickupReturnDAO {
 
             stmt.setInt(1, bookingId);
 
-            ResultSet rs = stmt.executeQuery();
+            try (ResultSet rs = stmt.executeQuery()) {
 
-            if (rs.next()) {
-                return new PickupReturn(
-                        rs.getInt("BookingID"),
-                        rs.getString("pickup_confirmed"),
-                        rs.getTimestamp("pickup_Date_Time").toLocalDateTime(),
-                        rs.getTimestamp("return_Date_Time").toLocalDateTime(),
-                        rs.getString("return_Confirmed"),
-                        rs.getBigDecimal("Extra_Charges")
-                );
+                if (rs.next()) {
+                    return new PickupReturn(
+                            rs.getInt("BookingID"),
+                            rs.getString("pickup_confirmed"),
+                            rs.getTimestamp("pickup_Date_Time").toLocalDateTime(),
+                            rs.getTimestamp("return_Date_Time").toLocalDateTime(),
+                            rs.getString("return_Confirmed"),
+                            rs.getBigDecimal("Extra_Charges")
+                    );
+                }
             }
 
         } catch (SQLException e) {
@@ -70,8 +73,12 @@ public class PickupReturnDAO {
     public boolean updatePickupReturn(PickupReturn pickupReturn) {
 
         String sql = "UPDATE Pickup_Return SET " +
-                "pickup_confirmed = ?, pickup_Date_Time = ?, return_Date_Time = ?, " +
-                "return_Confirmed = ?, Extra_Charges = ? WHERE BookingID = ?";
+                "pickup_confirmed = ?, " +
+                "pickup_Date_Time = ?, " +
+                "return_Date_Time = ?, " +
+                "return_Confirmed = ?, " +
+                "Extra_Charges = ? " +
+                "WHERE BookingID = ?";
 
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -87,6 +94,24 @@ public class PickupReturnDAO {
 
         } catch (SQLException e) {
             System.out.println("Update PickupReturn database error.");
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean deletePickupReturnByBookingId(int bookingId) {
+
+        String sql = "DELETE FROM Pickup_Return WHERE BookingID = ?";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, bookingId);
+
+            return stmt.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            System.out.println("Delete PickupReturn database error.");
             e.printStackTrace();
             return false;
         }
