@@ -1,5 +1,5 @@
-import backend.model.User;
-import backend.service.UserService;
+import main.java.backend.model.User;
+import main.java.backend.service.UserService;
 
 public class TestLoginBackend {
 
