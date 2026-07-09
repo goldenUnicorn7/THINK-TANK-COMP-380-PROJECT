@@ -1,11 +1,10 @@
--- MySQL Workbench Forward Engineering - Created Database for Car rental Desktop application
+-- MySQL Workbench Forward Engineering - Created Database for Car Rental Desktop Application
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE,
 SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
-DROP SCHEMA IF EXISTS `new_database`;
 CREATE SCHEMA IF NOT EXISTS `new_database` DEFAULT CHARACTER SET utf8;
 USE `new_database`;
 
@@ -31,6 +30,8 @@ CREATE TABLE IF NOT EXISTS `Car` (
   `CarModel` VARCHAR(45) NOT NULL,
   `CarColor` VARCHAR(45) NOT NULL,
   `CarYear` INT NOT NULL,
+  `Price` DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+  `Availability` VARCHAR(45) NOT NULL DEFAULT 'Available',
   PRIMARY KEY (`CarID`)
 ) ENGINE = InnoDB;
 

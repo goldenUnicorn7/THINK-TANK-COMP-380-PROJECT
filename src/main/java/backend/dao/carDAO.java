@@ -13,40 +13,47 @@ import backend.model.Car;
 public class carDAO {
 
     public List<Car> getAllCars() {
-        List<Car> cars = new ArrayList<>();
+    List<Car> cars = new ArrayList<>();
 
-        String sql = """
-                SELECT CarID, CarBrand, CarModel, CarColor, CarYear
-                FROM Car
-                ORDER BY CarBrand, CarModel
-                """;
+    String sql = """
+            SELECT CarID, CarBrand, CarModel, CarColor, CarYear, Price, Availability
+            FROM Car
+            ORDER BY CarBrand, CarModel
+            """;
 
-        try (
-                Connection conn = DBConnection.getConnection();
-                PreparedStatement stmt = conn.prepareStatement(sql);
-                ResultSet rs = stmt.executeQuery()
-        ) {
-            while (rs.next()) {
-                cars.add(mapResultSetToCar(rs));
-            }
+    System.out.println("Running getAllCars query...");
 
-        } catch (SQLException e) {
-            e.printStackTrace();
+    try (
+            Connection conn = DBConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery()
+    ) {
+        while (rs.next()) {
+            cars.add(mapResultSetToCar(rs));
         }
 
-        return cars;
+        System.out.println("Cars loaded from database inside DAO: " + cars.size());
+
+    } catch (SQLException e) {
+        System.out.println("Database error while loading cars: " + e.getMessage());
+        e.printStackTrace();
     }
+
+    return cars;
+}
 
     public List<Car> searchCars(String keyword) {
         List<Car> cars = new ArrayList<>();
 
         String sql = """
-                SELECT CarID, CarBrand, CarModel, CarColor, CarYear
+                SELECT CarID, CarBrand, CarModel, CarColor, CarYear, Price, Availability
                 FROM Car
                 WHERE CarBrand LIKE ?
                    OR CarModel LIKE ?
                    OR CarColor LIKE ?
                    OR CAST(CarYear AS CHAR) LIKE ?
+                   OR CAST(Price AS CHAR) LIKE ?
+                   OR Availability LIKE ?
                 ORDER BY CarBrand, CarModel
                 """;
 
@@ -60,12 +67,16 @@ public class carDAO {
             stmt.setString(2, searchKeyword);
             stmt.setString(3, searchKeyword);
             stmt.setString(4, searchKeyword);
+            stmt.setString(5, searchKeyword);
+            stmt.setString(6, searchKeyword);
 
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
                     cars.add(mapResultSetToCar(rs));
                 }
             }
+
+            System.out.println("Cars found from search: " + cars.size());
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -76,7 +87,7 @@ public class carDAO {
 
     public Car getCarById(int carId) {
         String sql = """
-                SELECT CarID, CarBrand, CarModel, CarColor, CarYear
+                SELECT CarID, CarBrand, CarModel, CarColor, CarYear, Price, Availability
                 FROM Car
                 WHERE CarID = ?
                 """;
@@ -108,6 +119,8 @@ public class carDAO {
         car.setCarModel(rs.getString("CarModel"));
         car.setCarColor(rs.getString("CarColor"));
         car.setCarYear(rs.getInt("CarYear"));
+        car.setPrice(rs.getDouble("Price"));
+        car.setAvailability(rs.getString("Availability"));
 
         return car;
     }

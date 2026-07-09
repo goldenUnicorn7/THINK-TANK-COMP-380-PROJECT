@@ -12,16 +12,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.TextField;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
-public class SearchViewController {
-
-    @FXML
-    private TextField searchField;
+public class CarViewController {
 
     @FXML
     private TableView<Car> carTableView;
@@ -42,17 +38,13 @@ public class SearchViewController {
 
     @FXML
     public void initialize() {
-        System.out.println("SearchViewController initialize() is running");
+        System.out.println("CarViewController initialize() is running");
 
         carColumn.setCellValueFactory(new PropertyValueFactory<>("carBrand"));
         modelColumn.setCellValueFactory(new PropertyValueFactory<>("carModel"));
         priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
         availabilityColumn.setCellValueFactory(new PropertyValueFactory<>("availability"));
 
-        loadAllCars();
-    }
-
-    private void loadAllCars() {
         List<Car> cars = carDao.getAllCars();
 
         System.out.println("Cars received from DAO: " + cars.size());
@@ -63,27 +55,8 @@ public class SearchViewController {
     }
 
     @FXML
-    public void searchCars(ActionEvent event) {
-        String keyword = searchField.getText();
-
-        System.out.println("Searching for: " + keyword);
-
-        List<Car> cars;
-
-        if (keyword == null || keyword.trim().isEmpty()) {
-            cars = carDao.getAllCars();
-        } else {
-            cars = carDao.searchCars(keyword.trim());
-        }
-
-        System.out.println("Search results: " + cars.size());
-
-        carTableView.setItems(FXCollections.observableArrayList(cars));
-    }
-
-    @FXML
     public void goToMainMenu(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/frontend/MainPage.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("MainMenu.fxml"));
         Parent root = loader.load();
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -103,5 +76,7 @@ public class SearchViewController {
         }
 
         System.out.println("Selected car: " + selectedCar.getCarBrand() + " " + selectedCar.getCarModel());
+
+        // Later you can connect this to CartService / CartDAO.
     }
 }
