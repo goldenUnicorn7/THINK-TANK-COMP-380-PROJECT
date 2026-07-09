@@ -13,15 +13,20 @@ public class UserDAO {
     public User login(String email, String password) {
         String sql = "SELECT * FROM Users WHERE UserEmail = ? AND UserPassword = ?";
 
+        System.out.println("Trying login with email: [" + email + "]");
+        System.out.println("Trying login with password: [" + password + "]");
+
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setString(1, email);
-            stmt.setString(2, password);
+            stmt.setString(1, email.trim());
+            stmt.setString(2, password.trim());
 
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
+                System.out.println("Login user found in database.");
+
                 return new User(
                         rs.getInt("UserID"),
                         rs.getString("UserPhoneNum"),
@@ -29,10 +34,12 @@ public class UserDAO {
                         rs.getString("UserEmail"),
                         rs.getString("UserName")
                 );
+            } else {
+                System.out.println("No matching user found.");
             }
 
         } catch (SQLException e) {
-            System.out.println("Login database error.");
+            System.out.println("Login database error: " + e.getMessage());
             e.printStackTrace();
         }
 
@@ -53,7 +60,7 @@ public class UserDAO {
             return stmt.executeUpdate() > 0;
 
         } catch (SQLException e) {
-            System.out.println("Register database error.");
+            System.out.println("Register database error: " + e.getMessage());
             e.printStackTrace();
             return false;
         }
@@ -65,14 +72,14 @@ public class UserDAO {
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setString(1, email);
+            stmt.setString(1, email.trim());
 
             ResultSet rs = stmt.executeQuery();
 
             return rs.next();
 
         } catch (SQLException e) {
-            System.out.println("Email check database error.");
+            System.out.println("Email check database error: " + e.getMessage());
             e.printStackTrace();
             return false;
         }
