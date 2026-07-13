@@ -1,193 +1,116 @@
 package backend.dao;
 
-import java.math.BigDecimal;
+import backend.db.DBConnection;
+import backend.model.Car;
+
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import backend.db.DBConnection;
-import backend.model.Cart;
-
 public class cartDAO {
 
-    public boolean addToCart(Cart cart) {
-        String sql = """
-                INSERT INTO Cart
-                (UserID, CarID, Return_Date, Pickup_Date, estimated_price)
-                VALUES (?, ?, ?, ?, ?)
-                """;
+    public boolean addToCart(int userId, int carId) {
+        String sql = "INSERT INTO cart (UserID, CarID) VALUES (?, ?)";
 
-        try (
-                Connection conn = DBConnection.getConnection();
-                PreparedStatement stmt = conn.prepareStatement(sql)
-        ) {
-            stmt.setInt(1, cart.getUserId());
-            stmt.setInt(2, cart.getCarId());
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setDate(3, Date.valueOf(cart.getReturnDate().toLocalDate()));
-            stmt.setDate(4, Date.valueOf(cart.getPickupDate().toLocalDate()));
+            stmt.setInt(1, userId);
+            stmt.setInt(2, carId);
 
-            stmt.setBigDecimal(5, cart.getEstimatedPrice());
-
-            return stmt.executeUpdate() > 0;
+            int rowsInserted = stmt.executeUpdate();
+            return rowsInserted > 0;
 
         } catch (SQLException e) {
+            System.out.println("Error adding car to cart.");
             e.printStackTrace();
+            return false;
         }
-
-        return false;
     }
 
-    public List<Cart> getCartByUserID(int userID) {
-        List<Cart> cartList = new ArrayList<>();
+    public List<Car> getCartCars(int userId) {
+        List<Car> cars = new ArrayList<>();
 
         String sql = """
-                SELECT CartID, UserID, CarID, Return_Date, Pickup_Date, estimated_price
-                FROM Cart
-                WHERE UserID = ?
-                ORDER BY CartID DESC
+                SELECT c.CarID,
+                       c.CarBrand,
+                       c.CarModel,
+                       c.CarColor,
+                       c.CarYear,
+                       c.Price,
+                       c.Availability
+                FROM cart ct
+                JOIN car c ON ct.CarID = c.CarID
+                WHERE ct.UserID = ?
                 """;
 
-        try (
-                Connection conn = DBConnection.getConnection();
-                PreparedStatement stmt = conn.prepareStatement(sql)
-        ) {
-            stmt.setInt(1, userID);
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, userId);
 
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
-                    Cart cart = new Cart();
-
-                    cart.setCartId(rs.getInt("CartID"));
-                    cart.setUserId(rs.getInt("UserID"));
-                    cart.setCarId(rs.getInt("CarID"));
-
-                    cart.setReturnDate(
-                            rs.getDate("Return_Date").toLocalDate().atStartOfDay()
+                    Car car = new Car(
+                            rs.getInt("CarID"),
+                            rs.getString("CarBrand"),
+                            rs.getString("CarModel"),
+                            rs.getString("CarColor"),
+                            rs.getInt("CarYear"),
+                            rs.getDouble("Price"),
+                            rs.getString("Availability")
                     );
 
-                    cart.setPickupDate(
-                            rs.getDate("Pickup_Date").toLocalDate().atStartOfDay()
-                    );
-
-                    cart.setEstimatedPrice(rs.getBigDecimal("estimated_price"));
-
-                    cartList.add(cart);
+                    cars.add(car);
                 }
             }
 
         } catch (SQLException e) {
+            System.out.println("Error loading cart cars.");
             e.printStackTrace();
         }
 
-        return cartList;
+        return cars;
     }
 
-    public boolean removeFromCart(int cartID) {
-        String sql = "DELETE FROM Cart WHERE CartID = ?";
+    public boolean removeFromCart(int userId, int carId) {
+        String sql = "DELETE FROM cart WHERE UserID = ? AND CarID = ?";
 
-        try (
-                Connection conn = DBConnection.getConnection();
-                PreparedStatement stmt = conn.prepareStatement(sql)
-        ) {
-            stmt.setInt(1, cartID);
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            return stmt.executeUpdate() > 0;
+            stmt.setInt(1, userId);
+            stmt.setInt(2, carId);
+
+            int rowsDeleted = stmt.executeUpdate();
+            return rowsDeleted > 0;
 
         } catch (SQLException e) {
+            System.out.println("Error removing car from cart.");
             e.printStackTrace();
+            return false;
         }
-
-        return false;
     }
 
-    public boolean clearCartByUserID(int userID) {
-        String sql = "DELETE FROM Cart WHERE UserID = ?";
+    public boolean clearCart(int userId) {
+        String sql = "DELETE FROM cart WHERE UserID = ?";
 
-        try (
-                Connection conn = DBConnection.getConnection();
-                PreparedStatement stmt = conn.prepareStatement(sql)
-        ) {
-            stmt.setInt(1, userID);
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            return stmt.executeUpdate() > 0;
+            stmt.setInt(1, userId);
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return false;
-    }
-
-    public boolean cartItemExists(int userID, int carID) {
-        String sql = """
-                SELECT CartID
-                FROM Cart
-                WHERE UserID = ? AND CarID = ?
-                """;
-
-        try (
-                Connection conn = DBConnection.getConnection();
-                PreparedStatement stmt = conn.prepareStatement(sql)
-        ) {
-            stmt.setInt(1, userID);
-            stmt.setInt(2, carID);
-
-            try (ResultSet rs = stmt.executeQuery()) {
-                return rs.next();
-            }
+            stmt.executeUpdate();
+            return true;
 
         } catch (SQLException e) {
+            System.out.println("Error clearing cart.");
             e.printStackTrace();
+            return false;
         }
-
-        return false;
-    }
-
-    public Cart getCartByID(int cartID) {
-        String sql = """
-                SELECT CartID, UserID, CarID, Return_Date, Pickup_Date, estimated_price
-                FROM Cart
-                WHERE CartID = ?
-                """;
-
-        try (
-                Connection conn = DBConnection.getConnection();
-                PreparedStatement stmt = conn.prepareStatement(sql)
-        ) {
-            stmt.setInt(1, cartID);
-
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    Cart cart = new Cart();
-
-                    cart.setCartId(rs.getInt("CartID"));
-                    cart.setUserId(rs.getInt("UserID"));
-                    cart.setCarId(rs.getInt("CarID"));
-
-                    cart.setReturnDate(
-                            rs.getDate("Return_Date").toLocalDate().atStartOfDay()
-                    );
-
-                    cart.setPickupDate(
-                            rs.getDate("Pickup_Date").toLocalDate().atStartOfDay()
-                    );
-
-                    cart.setEstimatedPrice(rs.getBigDecimal("estimated_price"));
-
-                    return cart;
-                }
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return null;
     }
 }

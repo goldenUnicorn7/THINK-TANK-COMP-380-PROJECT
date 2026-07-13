@@ -13,7 +13,8 @@ public class Car {
     public Car() {
     }
 
-    public Car(int carID, String carBrand, String carModel, String carColor, int carYear, double price, String availability) {
+    public Car(int carID, String carBrand, String carModel, String carColor,
+               int carYear, double price, String availability) {
         this.carID = carID;
         this.carBrand = carBrand;
         this.carModel = carModel;
