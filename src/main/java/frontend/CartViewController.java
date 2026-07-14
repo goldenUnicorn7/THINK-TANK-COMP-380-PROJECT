@@ -35,8 +35,6 @@ public class CartViewController {
 
     private final CartService cartService = new CartService();
 
-    // Temporary testing UserID.
-    // This must match the userId used in AvailableCarsController.
     private int loggedInUserId = 1;
 
     @FXML
@@ -113,15 +111,15 @@ public class CartViewController {
     }
 
     @FXML
-    public void checkout(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/frontend/Checkout.fxml"));
-        root = loader.load();
+public void checkout(ActionEvent event) throws IOException {
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("/frontend/Checkout.fxml"));
+    root = loader.load();
 
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
+    stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+    scene = new Scene(root);
+    stage.setScene(scene);
+    stage.show();
+}
 
     @FXML
     public void goToMainMenu(ActionEvent event) throws IOException {

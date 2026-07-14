@@ -11,7 +11,6 @@ import java.util.List;
 
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -42,8 +41,8 @@ public class CheckoutController {
     private final CartService cartService = new CartService();
     private final BookingService bookingService = new BookingService();
 
-    // TEMPORARY testing user ID.
-    // This must match AvailableCarsController and CartViewController.
+    // Temporary testing UserID.
+    // Must match AvailableCarsController and CartViewController.
     private int loggedInUserId = 1;
 
     @FXML
@@ -92,6 +91,8 @@ public class CheckoutController {
 
     @FXML
     public void initialize() {
+        System.out.println("CheckoutController initialize() running...");
+
         setupTableColumns();
         setupPaymentMethods();
         setDefaultDates();
@@ -129,13 +130,8 @@ public class CheckoutController {
     private void setDefaultDates() {
         LocalDate today = LocalDate.now();
 
-        if (pickupDatePicker != null) {
-            pickupDatePicker.setValue(today);
-        }
-
-        if (returnDatePicker != null) {
-            returnDatePicker.setValue(today.plusDays(1));
-        }
+        pickupDatePicker.setValue(today);
+        returnDatePicker.setValue(today.plusDays(1));
     }
 
     private void loadCartCars() {
@@ -145,13 +141,13 @@ public class CheckoutController {
             cartCars = FXCollections.observableArrayList(cars);
             checkoutTable.setItems(cartCars);
 
+            System.out.println("Checkout cart items loaded: " + cars.size());
+
             updateTotalAmount();
 
             if (messageLabel != null) {
                 messageLabel.setText("");
             }
-
-            System.out.println("Checkout cart cars loaded: " + cars.size());
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -234,17 +230,17 @@ public class CheckoutController {
                 return;
             }
 
-            double totalAmount = calculateTotalAmount();
-
             boolean allBooked = true;
 
             for (Car car : cartCars) {
+                double carTotal = car.getPrice() * calculateDays();
+
                 boolean booked = bookingService.createBooking(
                         loggedInUserId,
                         car.getCarID(),
                         pickupDate,
                         returnDate,
-                        car.getPrice() * calculateDays()
+                        carTotal
                 );
 
                 if (!booked) {
@@ -253,23 +249,25 @@ public class CheckoutController {
             }
 
             if (allBooked) {
+                double finalTotal = calculateTotalAmount();
+
                 cartService.clearCart(loggedInUserId);
                 cartCars.clear();
                 checkoutTable.refresh();
                 updateTotalAmount();
 
                 messageLabel.setStyle("-fx-text-fill: green;");
-                messageLabel.setText("Booking confirmed successfully. Total: $" + String.format("%.2f", totalAmount));
+                messageLabel.setText("Booking confirmed successfully. Total: $" + String.format("%.2f", finalTotal));
 
             } else {
                 messageLabel.setStyle("-fx-text-fill: red;");
-                messageLabel.setText("Some cars could not be booked.");
+                messageLabel.setText("Some bookings failed.");
             }
 
         } catch (Exception e) {
             e.printStackTrace();
             messageLabel.setStyle("-fx-text-fill: red;");
-            messageLabel.setText("Booking failed. Check terminal for details.");
+            messageLabel.setText("Booking failed. Check terminal.");
         }
     }
 

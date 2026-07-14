@@ -67,7 +67,7 @@
 
                 <Label text="Total Amount:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
                 <Label fx:id="totalAmountLabel"
-                       text="$0.00"
+                       text="\$0.00"
                        GridPane.rowIndex="3"
                        GridPane.columnIndex="1">
                     <font>
