@@ -5,6 +5,8 @@ import java.util.List;
 
 import backend.dao.carDAO;
 import backend.model.Car;
+import backend.service.CartService;
+import backend.session;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -39,6 +41,7 @@ public class SearchViewController {
     private TableColumn<Car, String> availabilityColumn;
 
     private final carDAO carDao = new carDAO();
+    private final CartService cartService = new CartService();
 
     @FXML
     public void initialize() {
@@ -82,6 +85,36 @@ public class SearchViewController {
     }
 
     @FXML
+    public void addToCart(ActionEvent event) {
+        Car selectedCar = carTableView.getSelectionModel().getSelectedItem();
+
+        if (selectedCar == null) {
+            System.out.println("No car selected.");
+            return;
+        }
+
+        if (session.getCurrentUser() == null) {
+            System.out.println("No logged-in user found.");
+            return;
+        }
+
+        int userId = session.getCurrentUser().getUserId();
+        int carId = selectedCar.getCarID();
+
+        System.out.println("Selected car: " + selectedCar.getCarBrand() + " " + selectedCar.getCarModel());
+        System.out.println("User ID: " + userId);
+        System.out.println("Car ID: " + carId);
+
+        boolean added = cartService.addToCart(userId, carId);
+
+        if (added) {
+            System.out.println("Car added to cart from search.");
+        } else {
+            System.out.println("Failed to add car to cart from search.");
+        }
+    }
+
+    @FXML
     public void goToMainMenu(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/frontend/MainPage.fxml"));
         Parent root = loader.load();
@@ -91,17 +124,5 @@ public class SearchViewController {
 
         stage.setScene(scene);
         stage.show();
-    }
-
-    @FXML
-    public void addToCart(ActionEvent event) {
-        Car selectedCar = carTableView.getSelectionModel().getSelectedItem();
-
-        if (selectedCar == null) {
-            System.out.println("No car selected.");
-            return;
-        }
-
-        System.out.println("Selected car: " + selectedCar.getCarBrand() + " " + selectedCar.getCarModel());
     }
 }

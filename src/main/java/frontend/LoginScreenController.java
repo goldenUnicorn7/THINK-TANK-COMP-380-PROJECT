@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import backend.model.User;
 import backend.service.UserService;
+import backend.session;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -47,11 +48,18 @@ public class LoginScreenController {
             return;
         }
 
-        User user = userService.login(email, password);
+        User user = userService.login(email.trim(), password.trim());
 
         if (user != null) {
+
+            // IMPORTANT: save logged-in user here
+            session.setCurrentUser(user);
+
             System.out.println("Login successful. Welcome " + user.getName());
+            System.out.println("Session user saved with ID: " + session.getCurrentUser().getUserId());
+
             goToMainPage(event);
+
         } else {
             showMessage("Invalid email or password.");
             System.out.println("Invalid email or password.");
