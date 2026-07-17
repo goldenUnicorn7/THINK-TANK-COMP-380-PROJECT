@@ -1,26 +1,42 @@
 package backend.dao;
 
-import backend.db.DBConnection;
-import backend.model.Car;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import backend.db.DBConnection;
+import backend.model.Car;
 
 public class cartDAO {
 
     public boolean addToCart(int userId, int carId) {
-        String sql = "INSERT INTO cart (UserID, CarID) VALUES (?, ?)";
+        System.out.println("NEW addToCart METHOD IS RUNNING");
+
+        String sql =  """
+            INSERT INTO Cart (UserID, CarID, Return_Date, Pickup_Date, estimated_price)
+            VALUES (?, ?, ?, ?, ?)
+            """;
 
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, userId);
             stmt.setInt(2, carId);
+
+             // Temporary default dates so the cart insert works
+        stmt.setDate(3, java.sql.Date.valueOf("2026-07-20")); // Return_Date
+        stmt.setDate(4, java.sql.Date.valueOf("2026-07-15")); // Pickup_Date
+
+        // Temporary estimated price
+        stmt.setDouble(5, 0.00);
+
+        System.out.println("SQL being used: " + sql);
+
+         System.out.println("Running new cart insert with dates and estimated price..."); 
+
 
             int rowsInserted = stmt.executeUpdate();
             return rowsInserted > 0;
@@ -43,7 +59,7 @@ public class cartDAO {
                        c.CarYear,
                        c.Price,
                        c.Availability
-                FROM cart ct
+                FROM Cart ct
                 JOIN car c ON ct.CarID = c.CarID
                 WHERE ct.UserID = ?
                 """;

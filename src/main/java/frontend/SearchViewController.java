@@ -14,10 +14,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.TextField;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 public class SearchViewController {
@@ -44,6 +46,20 @@ public class SearchViewController {
     private final CartService cartService = new CartService();
 
     @FXML
+    ImageView myImageView;
+    Image myImage = new Image("file:src/main/resources/frontend/img/ford_must.png");
+
+    @FXML
+    public void displayImage() {
+        myImageView.setImage(myImage);
+        
+    }
+
+   
+
+
+
+    @FXML
     public void initialize() {
         System.out.println("SearchViewController initialize() is running");
 
@@ -51,6 +67,8 @@ public class SearchViewController {
         modelColumn.setCellValueFactory(new PropertyValueFactory<>("carModel"));
         priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
         availabilityColumn.setCellValueFactory(new PropertyValueFactory<>("availability"));
+
+       
 
         loadAllCars();
     }
