@@ -1,155 +1,245 @@
--- MySQL Workbench Forward Engineering - Created Database for Car Rental Desktop Application
+-- =====================================================
+-- CAR RENTAL DATABASE SCHEMA
+-- WARNING: This script deletes and recreates all tables.
+-- =====================================================
 
-SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
-SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
-SET @OLD_SQL_MODE=@@SQL_MODE,
-SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+SET @OLD_UNIQUE_CHECKS = @@UNIQUE_CHECKS;
+SET @OLD_FOREIGN_KEY_CHECKS = @@FOREIGN_KEY_CHECKS;
+SET @OLD_SQL_MODE = @@SQL_MODE;
 
-CREATE SCHEMA IF NOT EXISTS `new_database` DEFAULT CHARACTER SET utf8;
+SET UNIQUE_CHECKS = 0;
+SET FOREIGN_KEY_CHECKS = 0;
+
+SET SQL_MODE =
+'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,
+ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+
+-- =====================================================
+-- CREATE AND SELECT DATABASE
+-- =====================================================
+
+CREATE SCHEMA IF NOT EXISTS `new_database`
+DEFAULT CHARACTER SET utf8mb4
+COLLATE utf8mb4_unicode_ci;
+
 USE `new_database`;
 
--- -----------------------------------------------------
--- Table `Users`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `Users` (
-  `UserID` INT NOT NULL AUTO_INCREMENT,
-  `UserPhoneNum` VARCHAR(20) NOT NULL,
-  `UserPassword` VARCHAR(45) NOT NULL,
-  `UserEmail` VARCHAR(45) NOT NULL,
-  `UserName` VARCHAR(45) NULL,
-  PRIMARY KEY (`UserID`),
-  UNIQUE INDEX `UserEmail_UNIQUE` (`UserEmail`)
+
+-- =====================================================
+-- REMOVE OLD TABLES
+-- Tables are dropped in reverse dependency order.
+-- =====================================================
+
+DROP TABLE IF EXISTS `Car_Reviews`;
+DROP TABLE IF EXISTS `Pickup_Return`;
+DROP TABLE IF EXISTS `Cart`;
+DROP TABLE IF EXISTS `Bookings`;
+DROP TABLE IF EXISTS `Car`;
+DROP TABLE IF EXISTS `Users`;
+
+
+-- =====================================================
+-- USERS TABLE
+-- =====================================================
+
+CREATE TABLE `Users` (
+    `UserID` INT NOT NULL AUTO_INCREMENT,
+    `UserPhoneNum` VARCHAR(20) NOT NULL,
+    `UserPassword` VARCHAR(255) NOT NULL,
+    `UserEmail` VARCHAR(100) NOT NULL,
+    `UserName` VARCHAR(100) NULL,
+
+    PRIMARY KEY (`UserID`),
+    UNIQUE INDEX `UserEmail_UNIQUE` (`UserEmail`)
 ) ENGINE = InnoDB;
 
--- -----------------------------------------------------
--- Table `Car`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `Car` (
-  `CarID` INT NOT NULL AUTO_INCREMENT,
-  `CarBrand` VARCHAR(45) NOT NULL,
-  `CarModel` VARCHAR(45) NOT NULL,
-  `CarColor` VARCHAR(45) NOT NULL,
-  `CarYear` INT NOT NULL,
-  `Price` DECIMAL(10,2) NOT NULL DEFAULT 0.00,
-  `Availability` VARCHAR(45) NOT NULL DEFAULT 'Available',
-  PRIMARY KEY (`CarID`)
+
+-- =====================================================
+-- CAR TABLE
+-- =====================================================
+
+CREATE TABLE `Car` (
+    `CarID` INT NOT NULL AUTO_INCREMENT,
+    `CarBrand` VARCHAR(45) NOT NULL,
+    `CarModel` VARCHAR(45) NOT NULL,
+    `CarColor` VARCHAR(45) NOT NULL,
+    `CarYear` INT NOT NULL,
+    `Price` DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+    `Availability` VARCHAR(45) NOT NULL DEFAULT 'Available',
+
+    PRIMARY KEY (`CarID`)
 ) ENGINE = InnoDB;
 
--- -----------------------------------------------------
--- Table `Bookings`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `Bookings` (
-  `BookingID` INT NOT NULL AUTO_INCREMENT,
-  `UserID` INT NOT NULL,
-  `CarID` INT NOT NULL,
-  `pickup_Date` DATE NOT NULL,
-  `return_Date` DATE NOT NULL,
-  `Total_price` DECIMAL(10,2) NOT NULL,
-  `Booking_Status` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`BookingID`),
 
-  INDEX `fk_Bookings_Users_idx` (`UserID`),
-  INDEX `fk_Bookings_Car_idx` (`CarID`),
+-- =====================================================
+-- BOOKINGS TABLE
+-- =====================================================
 
-  CONSTRAINT `fk_Bookings_Users`
-    FOREIGN KEY (`UserID`)
-    REFERENCES `Users` (`UserID`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
+CREATE TABLE `Bookings` (
+    `BookingID` INT NOT NULL AUTO_INCREMENT,
+    `UserID` INT NOT NULL,
+    `CarID` INT NOT NULL,
+    `pickup_Date` DATE NOT NULL,
+    `return_Date` DATE NOT NULL,
+    `Total_price` DECIMAL(10,2) NOT NULL,
+    `Booking_Status` VARCHAR(45) NOT NULL DEFAULT 'Pending',
 
-  CONSTRAINT `fk_Bookings_Car`
-    FOREIGN KEY (`CarID`)
-    REFERENCES `Car` (`CarID`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE
+    PRIMARY KEY (`BookingID`),
+
+    INDEX `fk_Bookings_Users_idx` (`UserID`),
+    INDEX `fk_Bookings_Car_idx` (`CarID`),
+
+    CONSTRAINT `fk_Bookings_Users`
+        FOREIGN KEY (`UserID`)
+        REFERENCES `Users` (`UserID`)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+
+    CONSTRAINT `fk_Bookings_Car`
+        FOREIGN KEY (`CarID`)
+        REFERENCES `Car` (`CarID`)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+
+    CONSTRAINT `chk_Bookings_Dates`
+        CHECK (`return_Date` >= `pickup_Date`),
+
+    CONSTRAINT `chk_Bookings_TotalPrice`
+        CHECK (`Total_price` >= 0)
 ) ENGINE = InnoDB;
 
--- -----------------------------------------------------
--- Table `Pickup_Return`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `Pickup_Return` (
-  `record_id` INT NOT NULL AUTO_INCREMENT,
-  `BookingID` INT NOT NULL,
-  `pickup_confirmed` VARCHAR(45) NOT NULL,
-  `pickup_Date_Time` DATETIME NOT NULL,
-  `return_Confirmed` VARCHAR(45) NOT NULL,
-  `Extra_Charges` DECIMAL(10,2) NOT NULL,
-  `return_Date_Time` DATETIME NOT NULL,
-  PRIMARY KEY (`record_id`),
 
-  INDEX `fk_Pickup_Return_Bookings_idx` (`BookingID`),
+-- =====================================================
+-- PICKUP AND RETURN TABLE
+-- =====================================================
 
-  CONSTRAINT `fk_Pickup_Return_Bookings`
-    FOREIGN KEY (`BookingID`)
-    REFERENCES `Bookings` (`BookingID`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE
+CREATE TABLE `Pickup_Return` (
+    `record_id` INT NOT NULL AUTO_INCREMENT,
+    `BookingID` INT NOT NULL,
+    `pickup_confirmed` VARCHAR(45) NOT NULL DEFAULT 'No',
+    `pickup_Date_Time` DATETIME NULL,
+    `return_Confirmed` VARCHAR(45) NOT NULL DEFAULT 'No',
+    `Extra_Charges` DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+    `return_Date_Time` DATETIME NULL,
+
+    PRIMARY KEY (`record_id`),
+
+    INDEX `fk_Pickup_Return_Bookings_idx` (`BookingID`),
+
+    CONSTRAINT `fk_Pickup_Return_Bookings`
+        FOREIGN KEY (`BookingID`)
+        REFERENCES `Bookings` (`BookingID`)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+
+    CONSTRAINT `chk_Pickup_Return_ExtraCharges`
+        CHECK (`Extra_Charges` >= 0)
 ) ENGINE = InnoDB;
 
--- -----------------------------------------------------
--- Table `Cart`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `Cart` (
-  `CartID` INT NOT NULL AUTO_INCREMENT,
-  `UserID` INT NOT NULL,
-  `CarID` INT NOT NULL,
-  `Return_Date` DATE NOT NULL,
-  `Pickup_Date` DATE NOT NULL,
-  `estimated_price` DECIMAL(10,2) NOT NULL,
-  PRIMARY KEY (`CartID`),
 
-  INDEX `fk_Cart_Users_idx` (`UserID`),
-  INDEX `fk_Cart_Car_idx` (`CarID`),
+-- =====================================================
+-- CART TABLE
+-- These column names match your Java INSERT statement:
+--
+-- INSERT INTO Cart
+-- (UserID, CarID, Return_Date, Pickup_Date, estimated_price)
+-- VALUES (?, ?, ?, ?, ?)
+-- =====================================================
 
-  CONSTRAINT `fk_Cart_Users`
-    FOREIGN KEY (`UserID`)
-    REFERENCES `Users` (`UserID`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
+CREATE TABLE `Cart` (
+    `CartID` INT NOT NULL AUTO_INCREMENT,
+    `UserID` INT NOT NULL,
+    `CarID` INT NOT NULL,
+    `Return_Date` DATE NOT NULL,
+    `Pickup_Date` DATE NOT NULL,
+    `estimated_price` DECIMAL(10,2) NOT NULL,
 
-  CONSTRAINT `fk_Cart_Car`
-    FOREIGN KEY (`CarID`)
-    REFERENCES `Car` (`CarID`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE
+    PRIMARY KEY (`CartID`),
+
+    INDEX `fk_Cart_Users_idx` (`UserID`),
+    INDEX `fk_Cart_Car_idx` (`CarID`),
+
+    CONSTRAINT `fk_Cart_Users`
+        FOREIGN KEY (`UserID`)
+        REFERENCES `Users` (`UserID`)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+
+    CONSTRAINT `fk_Cart_Car`
+        FOREIGN KEY (`CarID`)
+        REFERENCES `Car` (`CarID`)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+
+    CONSTRAINT `chk_Cart_Dates`
+        CHECK (`Return_Date` >= `Pickup_Date`),
+
+    CONSTRAINT `chk_Cart_EstimatedPrice`
+        CHECK (`estimated_price` >= 0)
 ) ENGINE = InnoDB;
 
--- -----------------------------------------------------
--- Table `Car_Reviews`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `Car_Reviews` (
-  `ReviewID` INT NOT NULL AUTO_INCREMENT,
-  `UserID` INT NOT NULL,
-  `CarID` INT NOT NULL,
-  `BookingID` INT NOT NULL,
-  `Rating` INT NOT NULL,
-  `Comments` VARCHAR(255) NULL,
-  `Review_Date` DATE NOT NULL,
-  PRIMARY KEY (`ReviewID`),
 
-  INDEX `fk_Car_Reviews_Users_idx` (`UserID`),
-  INDEX `fk_Car_Reviews_Car_idx` (`CarID`),
-  INDEX `fk_Car_Reviews_Bookings_idx` (`BookingID`),
+-- =====================================================
+-- CAR REVIEWS TABLE
+-- =====================================================
 
-  CONSTRAINT `fk_Car_Reviews_Users`
-    FOREIGN KEY (`UserID`)
-    REFERENCES `Users` (`UserID`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
+CREATE TABLE `Car_Reviews` (
+    `ReviewID` INT NOT NULL AUTO_INCREMENT,
+    `UserID` INT NOT NULL,
+    `CarID` INT NOT NULL,
+    `BookingID` INT NOT NULL,
+    `Rating` INT NOT NULL,
+    `Comments` VARCHAR(255) NULL,
+    `Review_Date` DATE NOT NULL,
 
-  CONSTRAINT `fk_Car_Reviews_Car`
-    FOREIGN KEY (`CarID`)
-    REFERENCES `Car` (`CarID`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
+    PRIMARY KEY (`ReviewID`),
 
-  CONSTRAINT `fk_Car_Reviews_Bookings`
-    FOREIGN KEY (`BookingID`)
-    REFERENCES `Bookings` (`BookingID`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE
+    INDEX `fk_Car_Reviews_Users_idx` (`UserID`),
+    INDEX `fk_Car_Reviews_Car_idx` (`CarID`),
+    INDEX `fk_Car_Reviews_Bookings_idx` (`BookingID`),
+
+    CONSTRAINT `fk_Car_Reviews_Users`
+        FOREIGN KEY (`UserID`)
+        REFERENCES `Users` (`UserID`)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+
+    CONSTRAINT `fk_Car_Reviews_Car`
+        FOREIGN KEY (`CarID`)
+        REFERENCES `Car` (`CarID`)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+
+    CONSTRAINT `fk_Car_Reviews_Bookings`
+        FOREIGN KEY (`BookingID`)
+        REFERENCES `Bookings` (`BookingID`)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+
+    CONSTRAINT `chk_Car_Reviews_Rating`
+        CHECK (`Rating` BETWEEN 1 AND 5)
 ) ENGINE = InnoDB;
 
-SET SQL_MODE=@OLD_SQL_MODE;
-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+-- =====================================================
+-- RESTORE MYSQL SETTINGS
+-- =====================================================
+
+SET SQL_MODE = @OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS = @OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS = @OLD_UNIQUE_CHECKS;
+
+
+-- =====================================================
+-- VERIFY TABLES
+-- =====================================================
+
+SHOW TABLES;
+
+DESCRIBE `Users`;
+DESCRIBE `Car`;
+DESCRIBE `Bookings`;
+DESCRIBE `Pickup_Return`;
+DESCRIBE `Cart`;
+DESCRIBE `Car_Reviews`;
