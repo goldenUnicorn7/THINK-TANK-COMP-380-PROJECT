@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="frontend.ConfirmationScreenController"
+            prefHeight="600.0"
+            prefWidth="900.0">
+
+    <children>
+        <Label text="Thank you for your order!"
+               layoutX="250.0"
+               layoutY="60.0"
+               prefHeight="50.0"
+               alignment="CENTER"
+               prefWidth="400.0">
+            <font>
+                <Font size="28.0"/>
+            </font>
+            </Label>
+
+        <Label fx:id="receiptLabel"
+               layoutX="250.0"
+               layoutY="120.0"
+               prefHeight="35.0"
+               prefWidth="400.0"
+               alignment="CENTER"
+               text="Your Receipt">
+            <font>
+                <Font size="18.0"/>
+            </font>
+        </Label>
+
+        <TableView fx:id="receiptTable"
+                   layoutX="150.0"
+                   layoutY="170.0"
+                   prefHeight="250.0"
+                   prefWidth="600.0">
+
+            <columns>
+                <TableColumn fx:id="brandColumn" text="Brand" prefWidth="120.0"/>
+                <TableColumn fx:id="modelColumn" text="Model" prefWidth="120.0"/>
+                <TableColumn fx:id="priceColumn" text="Price" prefWidth="120.0"/>
+                <TableColumn fx:id="daysColumn" text="Days" prefWidth="100.0"/>
+                <TableColumn fx:id="totalPriceColumn" text="Total" prefWidth="120.0"/>
+            </columns>
+        </TableView>
+
+        <Button fx:id="returnToMainButton"
+                layoutX="325.0"
+                layoutY="460.0"
+                mnemonicParsing="false"
+                prefHeight="35.0"
+                prefWidth="100.0"
+                text="Main Menu"
+                onAction="#goToMainPage"/>
+
+        <Button fx:id="returnToSearchButton"
+                layoutX="465.0"
+                layoutY="460.0"
+                mnemonicParsing="false"
+                prefHeight="35.0"
+                prefWidth="100.0"
+                text="Search Cars"
+                onAction="#goToSearch"/>
+
+    </children>
+</AnchorPane>

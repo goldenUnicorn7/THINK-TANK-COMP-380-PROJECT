@@ -45,6 +45,7 @@ public class SearchViewController {
     private final carDAO carDao = new carDAO();
     private final CartService cartService = new CartService();
 
+    //some of the logic for adding the image. you can change url incase it dont work
     @FXML
     ImageView myImageView;
     Image myImage = new Image("file:src/main/resources/frontend/img/ford_must.png");

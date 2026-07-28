@@ -15,6 +15,7 @@ public class cartDAO {
     public boolean addToCart(int userId, int carId) {
         System.out.println("NEW addToCart METHOD IS RUNNING");
 
+        // minor fix to sql, all I did was add more values, sql needed more values to store
         String sql =  """
             INSERT INTO Cart (UserID, CarID, Return_Date, Pickup_Date, estimated_price)
             VALUES (?, ?, ?, ?, ?)

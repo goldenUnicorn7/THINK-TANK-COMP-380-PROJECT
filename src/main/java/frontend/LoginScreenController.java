@@ -11,6 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -27,16 +28,37 @@ public class LoginScreenController {
     @FXML
     private Label messageLabel;
 
+    @FXML
+    private Button loginButton;
+
     private final UserService userService = new UserService();
 
     private Parent root;
     private Stage stage;
     private Scene scene;
 
+
+    @FXML
+    public void initialize() {
+        // This is for styling buttons. was testing
+        // if we dont like it we can remove it/change it.
+        loginButton.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold;");
+
+        loginButton.setOnMouseEntered(event -> {
+            loginButton.setStyle("-fx-background-color: #a04588; -fx-text-fill: white; -fx-font-weight: bold;");
+        });
+
+        loginButton.setOnMouseExited(event -> {
+            loginButton.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold;");
+        });
+    }
+
+
     @FXML
     public void loginUser(ActionEvent event) throws IOException {
         String email = userName.getText();
         String password = userPassword.getText();
+
 
         if (email == null || email.trim().isEmpty()) {
             showMessage("Please enter your email.");
@@ -78,6 +100,7 @@ public class LoginScreenController {
 
         stage.setScene(scene);
         stage.show();
+        
     }
 
     private void showMessage(String message) {

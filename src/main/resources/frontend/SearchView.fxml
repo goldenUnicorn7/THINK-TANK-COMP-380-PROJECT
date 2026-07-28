@@ -49,6 +49,7 @@
             </columns>
         </TableView>
 
+        <!--This is for the car image in the search screen, image is in img folder-->
         <ImageView fx:id="myImageView"
                    layoutX="575.0"
                    layoutY="20.0"

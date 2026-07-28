@@ -8,6 +8,7 @@
             "mainClass": "frontend.Main",
             "classPaths": [
                 "${workspaceFolder}/src",
+                "${workspaceFolder}/target/classes", //This was for my machine, if runs without it, you can remove it
                 "${workspaceFolder}/library/mysql-connector-j-9.6.0.jar",
                 "C:/javafx-sdk-21.0.11/lib/*"
             ],

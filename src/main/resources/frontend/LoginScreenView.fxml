@@ -7,11 +7,14 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
+<!-- Style was used to change bg of page -->
+<!-- buttons need ids so that they can change style on hover -->
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity"
             minHeight="-Infinity" minWidth="-Infinity"
             prefHeight="400.0" prefWidth="600.0"
             xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
+            style="-fx-background-color: #c2ecff;"
             fx:controller="frontend.LoginScreenController">
    <children>
       <Label alignment="CENTER" layoutY="35.0" prefHeight="17.0" prefWidth="600.0" text="Welcome!">
@@ -22,7 +25,7 @@
 
       <PasswordField fx:id="userPassword" layoutX="217.0" layoutY="200.0" promptText="password" />
 
-      <Button layoutX="268.0" layoutY="298.0" mnemonicParsing="false" onAction="#loginUser" text="Login" />
+      <Button fx:id="loginButton" layoutX="268.0" layoutY="298.0" mnemonicParsing="false" onAction="#loginUser" text="Login" />
 
       <TextField fx:id="userName" layoutX="217.0" layoutY="156.0" promptText="username" />
 

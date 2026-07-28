@@ -1,27 +1,23 @@
 package frontend;
 
-import backend.model.Car;
-import backend.service.BookingService;
-import backend.service.CartService;
-
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
+import backend.model.Car;
+import backend.service.BookingService;
+import backend.service.CartService;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -29,7 +25,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-
 import javafx.stage.Stage;
 
 public class CheckoutController {
@@ -251,6 +246,10 @@ public class CheckoutController {
             if (allBooked) {
                 double finalTotal = calculateTotalAmount();
 
+                // used in confirm screen
+                int days = calculateDays();
+                List<Car> purchasedCars = List.copyOf(cartCars);
+                
                 cartService.clearCart(loggedInUserId);
                 cartCars.clear();
                 checkoutTable.refresh();
@@ -258,6 +257,9 @@ public class CheckoutController {
 
                 messageLabel.setStyle("-fx-text-fill: green;");
                 messageLabel.setText("Booking confirmed successfully. Total: $" + String.format("%.2f", finalTotal));
+
+                //goto confirmation screen
+                goToConfirmationScreen(event, purchasedCars, days, finalTotal);
 
             } else {
                 messageLabel.setStyle("-fx-text-fill: red;");
@@ -269,6 +271,23 @@ public class CheckoutController {
             messageLabel.setStyle("-fx-text-fill: red;");
             messageLabel.setText("Booking failed. Check terminal.");
         }
+    }
+
+
+    // navigate to confirmation screen
+    @FXML 
+    public void goToConfirmationScreen(ActionEvent event, List<Car> purchasedCars, int days, double totalAmount) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/frontend/ConfirmationScreen.fxml"));
+        root = loader.load();
+
+        ConfirmationScreenController confirmationController = loader.getController();
+        confirmationController.setReceiptData(purchasedCars, days, totalAmount);
+
+
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
     @FXML
