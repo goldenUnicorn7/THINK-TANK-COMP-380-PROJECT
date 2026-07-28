@@ -12,10 +12,10 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        URL fxmlLocation = getClass().getResource("/frontend/LoginScreenView.fxml");
+        URL fxmlLocation = getClass().getResource("/frontend/RegisterScreen.fxml");
 
         if (fxmlLocation == null) {
-            throw new RuntimeException("Cannot find LoginScreenView.fxml in src/main/resources/frontend");
+            throw new RuntimeException("Cannot find RegisterScreen.fxml in src/main/resources/frontend");
         }
 
         Parent root = FXMLLoader.load(fxmlLocation);
