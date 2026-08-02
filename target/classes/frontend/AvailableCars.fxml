@@ -11,99 +11,74 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="frontend.AvailableCarsController"
-            prefHeight="600.0"
-            prefWidth="950.0">
+<AnchorPane prefHeight="600.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.AvailableCarsController">
 
     <children>
-        <VBox spacing="15.0"
-              AnchorPane.topAnchor="20.0"
-              AnchorPane.leftAnchor="20.0"
-              AnchorPane.rightAnchor="20.0"
-              AnchorPane.bottomAnchor="20.0">
+        <VBox spacing="15.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
 
             <padding>
-                <Insets top="10.0" right="10.0" bottom="10.0" left="10.0"/>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
             </padding>
 
             <Label text="Available Cars">
                 <font>
-                    <Font size="28.0"/>
+                    <Font name="Georgia" size="30.0" />
                 </font>
             </Label>
 
             <HBox spacing="10.0">
-                <TextField fx:id="searchField"
-                           promptText="Search by brand or model"
-                           prefWidth="300.0"/>
+                <TextField fx:id="searchField" prefWidth="300.0" promptText="Search by brand or model">
+               <font>
+                  <Font name="Georgia" size="12.0" />
+               </font></TextField>
 
-                <Button fx:id="searchButton"
-                        text="Search"
-                        prefWidth="100.0"
-                        onAction="#searchCars"/>
+                <Button fx:id="searchButton" onAction="#searchCars" prefWidth="100.0" text="Search">
+               <font>
+                  <Font name="Georgia" size="12.0" />
+               </font></Button>
 
-                <Button text="Refresh"
-                        prefWidth="100.0"
-                        onAction="#refreshCars"/>
+                <Button onAction="#refreshCars" prefWidth="100.0" text="Refresh">
+               <font>
+                  <Font name="Georgia" size="12.0" />
+               </font></Button>
             </HBox>
 
-            <TableView fx:id="availableCarsTable"
-                       prefHeight="400.0"
-                       prefWidth="900.0"
-                       VBox.vgrow="ALWAYS">
+            <TableView fx:id="availableCarsTable" prefHeight="400.0" prefWidth="900.0" VBox.vgrow="ALWAYS">
 
                 <columns>
-                    <TableColumn fx:id="carIdColumn"
-                                 text="Car ID"
-                                 prefWidth="80.0"/>
+                    <TableColumn fx:id="carIdColumn" prefWidth="80.0" text="Car ID" />
 
-                    <TableColumn fx:id="brandColumn"
-                                 text="Brand"
-                                 prefWidth="140.0"/>
+                    <TableColumn fx:id="brandColumn" prefWidth="140.0" text="Brand" />
 
-                    <TableColumn fx:id="modelColumn"
-                                 text="Model"
-                                 prefWidth="140.0"/>
+                    <TableColumn fx:id="modelColumn" prefWidth="140.0" text="Model" />
 
-                    <TableColumn fx:id="colorColumn"
-                                 text="Color"
-                                 prefWidth="110.0"/>
+                    <TableColumn fx:id="colorColumn" prefWidth="110.0" text="Color" />
 
-                    <TableColumn fx:id="yearColumn"
-                                 text="Year"
-                                 prefWidth="90.0"/>
+                    <TableColumn fx:id="yearColumn" prefWidth="90.0" text="Year" />
 
-                    <TableColumn fx:id="priceColumn"
-                                 text="Price / Day"
-                                 prefWidth="120.0"/>
+                    <TableColumn fx:id="priceColumn" prefWidth="120.0" text="Price / Day" />
 
-                    <TableColumn fx:id="statusColumn"
-                                 text="Availability"
-                                 prefWidth="150.0"/>
+                    <TableColumn fx:id="statusColumn" prefWidth="150.0" text="Availability" />
                 </columns>
             </TableView>
 
-            <Label fx:id="messageLabel"
-                   text=""
-                   style="-fx-text-fill: red; -fx-font-size: 14px;"/>
+            <Label fx:id="messageLabel" style="-fx-text-fill: red; -fx-font-size: 14px;" text="" />
 
             <HBox spacing="15.0">
-                <Button fx:id="addToCartButton"
-                        text="Add To Cart"
-                        prefWidth="140.0"
-                        onAction="#addSelectedCarToCart"/>
+                <Button fx:id="addToCartButton" onAction="#addSelectedCarToCart" prefWidth="140.0" text="Add To Cart">
+               <font>
+                  <Font name="Georgia" size="14.0" />
+               </font></Button>
 
-                <Button fx:id="goToCartButton"
-                        text="Go To Cart"
-                        prefWidth="140.0"
-                        onAction="#goToCartScreen"/>
+                <Button fx:id="goToCartButton" onAction="#goToCartScreen" prefWidth="140.0" text="Go To Cart">
+               <font>
+                  <Font name="Georgia" size="14.0" />
+               </font></Button>
 
-                <Button fx:id="backButton"
-                        text="Back"
-                        prefWidth="100.0"
-                        onAction="#goBackToMainPage"/>
+                <Button fx:id="backButton" onAction="#goBackToMainPage" prefWidth="100.0" text="Back">
+               <font>
+                  <Font name="Georgia" size="14.0" />
+               </font></Button>
             </HBox>
         </VBox>
     </children>
