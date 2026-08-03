@@ -9,30 +9,30 @@
 
    <children>
 
-      <Label alignment="CENTER" layoutY="33.0" prefHeight="39.0" prefWidth="600.0" text="Your Item Has Been Added To Cart">
+      <Label alignment="CENTER" layoutY="14.0" prefHeight="39.0" prefWidth="600.0" text="Your Item Has Been Added To Cart">
          <font>
             <Font name="Georgia" size="27.0" />
          </font>
       </Label>
 
-      <Label layoutX="79.0" layoutY="163.0" text="Continue Shopping">
+      <Label layoutX="60.0" layoutY="138.0" text="Continue Shopping">
          <font>
             <Font name="Georgia" size="21.0" />
          </font>
       </Label>
 
-      <Label layoutX="355.0" layoutY="163.0" text="Go To Your Cart">
+      <Label layoutX="355.0" layoutY="138.0" text="Go To Your Cart">
          <font>
             <Font name="Georgia" size="21.0" />
          </font>
       </Label>
 
-      <Button fx:id="goBackToStore" layoutX="147.0" layoutY="200.0" mnemonicParsing="false" onAction="#goToAvailableCars" text="Back">
+      <Button fx:id="goBackToStore" layoutX="124.0" layoutY="175.0" mnemonicParsing="false" onAction="#goToAvailableCars" text="Back">
          <font>
             <Font name="Georgia" size="12.0" />
          </font></Button>
 
-      <Button fx:id="goToCart" layoutX="394.0" layoutY="200.0" mnemonicParsing="false" onAction="#goToCartScreen" text="Go To Cart">
+      <Button fx:id="goToCart" layoutX="404.0" layoutY="175.0" mnemonicParsing="false" onAction="#goToCartScreen" text="Go To Cart">
          <font>
             <Font name="Georgia" size="12.0" />
          </font></Button>

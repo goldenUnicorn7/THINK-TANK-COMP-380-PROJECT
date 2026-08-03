@@ -25,6 +25,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 public class CheckoutController {
@@ -81,6 +83,16 @@ public class CheckoutController {
 
     @FXML
     private Button backButton;
+
+    @FXML 
+    ImageView logoImageView;
+    Image logoImage = new Image(getClass().getResourceAsStream("/frontend/img/logo.png"));
+    
+    @FXML
+    public void displayImage() {
+        logoImageView.setImage(logoImage);
+        
+    }
 
     private ObservableList<Car> cartCars = FXCollections.observableArrayList();
 

@@ -22,7 +22,12 @@ public class MainPageController {
     @FXML
     ImageView logoImageView;
 
-    Image logoImage = new Image(getClass().getResourceAsStream("logo.png"));
+    Image logoImage = new Image(getClass().getResourceAsStream("/frontend/img/logo.png"));
+    @FXML
+    public void displayImage() {
+        logoImageView.setImage(logoImage);
+        
+    }
 
     @FXML
     public void goToSearch(ActionEvent event) throws IOException {

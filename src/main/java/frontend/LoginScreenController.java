@@ -36,7 +36,12 @@ public class LoginScreenController {
     @FXML
     ImageView logoImageView;
 
-    Image logoImage = new Image(getClass().getResourceAsStream("logo.png"));
+    Image logoImage = new Image(getClass().getResourceAsStream("/frontend/img/logo.png"));
+    @FXML
+    public void displayImage() {
+        logoImageView.setImage(logoImage);
+        
+    }
 
 
     private final UserService userService = new UserService();

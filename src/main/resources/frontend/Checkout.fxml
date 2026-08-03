@@ -7,91 +7,102 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="frontend.CheckoutController"
-            prefHeight="600.0"
-            prefWidth="900.0">
+<AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.CheckoutController">
 
     <children>
-        <VBox spacing="15.0"
-              AnchorPane.topAnchor="20.0"
-              AnchorPane.leftAnchor="20.0"
-              AnchorPane.rightAnchor="20.0"
-              AnchorPane.bottomAnchor="20.0">
+        <VBox spacing="15.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
 
             <padding>
-                <Insets top="10.0" right="10.0" bottom="10.0" left="10.0"/>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
             </padding>
 
             <Label text="Checkout">
                 <font>
-                    <Font size="28.0"/>
+                    <Font name="Georgia" size="28.0" />
                 </font>
             </Label>
 
-            <TableView fx:id="checkoutTable"
-                       prefHeight="280.0"
-                       prefWidth="850.0"
-                       VBox.vgrow="ALWAYS">
+            <TableView fx:id="checkoutTable" prefHeight="280.0" prefWidth="850.0" VBox.vgrow="ALWAYS">
 
                 <columns>
-                    <TableColumn fx:id="carIdColumn" text="Car ID" prefWidth="80.0"/>
-                    <TableColumn fx:id="brandColumn" text="Brand" prefWidth="150.0"/>
-                    <TableColumn fx:id="modelColumn" text="Model" prefWidth="150.0"/>
-                    <TableColumn fx:id="priceColumn" text="Price / Day" prefWidth="120.0"/>
-                    <TableColumn fx:id="daysColumn" text="Days" prefWidth="100.0"/>
-                    <TableColumn fx:id="totalColumn" text="Total" prefWidth="120.0"/>
+                    <TableColumn fx:id="carIdColumn" prefWidth="80.0" text="Car ID" />
+                    <TableColumn fx:id="brandColumn" prefWidth="150.0" text="Brand" />
+                    <TableColumn fx:id="modelColumn" prefWidth="150.0" text="Model" />
+                    <TableColumn fx:id="priceColumn" prefWidth="120.0" text="Price / Day" />
+                    <TableColumn fx:id="daysColumn" prefWidth="100.0" text="Days" />
+                    <TableColumn fx:id="totalColumn" prefWidth="120.0" text="Total" />
                 </columns>
             </TableView>
 
             <GridPane hgap="10.0" vgap="10.0">
-                <Label text="Pickup Date:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-                <DatePicker fx:id="pickupDatePicker" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                <Label text="Pickup Date:" GridPane.columnIndex="0" GridPane.rowIndex="0">
+               <font>
+                  <Font name="Georgia" size="12.0" />
+               </font></Label>
+                <DatePicker fx:id="pickupDatePicker" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
-                <Label text="Return Date:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-                <DatePicker fx:id="returnDatePicker" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                <Label text="Return Date:" GridPane.columnIndex="0" GridPane.rowIndex="1">
+               <font>
+                  <Font name="Georgia" size="12.0" />
+               </font></Label>
+                <DatePicker fx:id="returnDatePicker" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
-                <Label text="Payment Method:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-                <ComboBox fx:id="paymentMethodComboBox"
-                          promptText="Select payment method"
-                          prefWidth="180.0"
-                          GridPane.rowIndex="2"
-                          GridPane.columnIndex="1"/>
+                <Label text="Payment Method:" GridPane.columnIndex="0" GridPane.rowIndex="2">
+               <font>
+                  <Font name="Georgia" size="12.0" />
+               </font></Label>
+                <ComboBox fx:id="paymentMethodComboBox" prefWidth="180.0" promptText="Select payment method" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
-                <Label text="Total Amount:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-                <Label fx:id="totalAmountLabel"
-                       text="\$0.00"
-                       GridPane.rowIndex="3"
-                       GridPane.columnIndex="1">
+                <Label text="Total Amount:" GridPane.columnIndex="0" GridPane.rowIndex="3">
+               <font>
+                  <Font name="Georgia" size="12.0" />
+               </font></Label>
+                <Label fx:id="totalAmountLabel" text="\$0.00" GridPane.columnIndex="1" GridPane.rowIndex="3">
                     <font>
-                        <Font size="18.0"/>
+                        <Font size="18.0" />
                     </font>
                 </Label>
+            <columnConstraints>
+               <ColumnConstraints />
+               <ColumnConstraints />
+            </columnConstraints>
+            <rowConstraints>
+               <RowConstraints />
+               <RowConstraints />
+               <RowConstraints />
+               <RowConstraints />
+            </rowConstraints>
             </GridPane>
 
             <HBox spacing="15.0">
-                <Button fx:id="confirmBookingButton"
-                        text="Confirm Booking"
-                        prefWidth="160.0"
-                        onAction="#confirmBooking"/>
+                <Button fx:id="confirmBookingButton" onAction="#confirmBooking" prefWidth="160.0" text="Confirm Booking">
+               <font>
+                  <Font name="Georgia" size="12.0" />
+               </font></Button>
 
-                <Button fx:id="backButton"
-                        text="Back To Cart"
-                        prefWidth="120.0"
-                        onAction="#goBackToCart"/>
+                <Button fx:id="backButton" onAction="#goBackToCart" prefWidth="120.0" text="Back To Cart">
+               <font>
+                  <Font name="Georgia" size="12.0" />
+               </font></Button>
             </HBox>
 
-            <Label fx:id="messageLabel"
-                   text=""
-                   style="-fx-text-fill: red; -fx-font-size: 14px;"/>
+            <Label fx:id="messageLabel" style="-fx-text-fill: red; -fx-font-size: 14px;" text="" />
 
         </VBox>
+      <ImageView fx:id="logoImageView" fitHeight="247.0" fitWidth="329.0" layoutX="653.0" layoutY="445.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@img/logo.png" />
+         </image>
+      </ImageView>
     </children>
 </AnchorPane>

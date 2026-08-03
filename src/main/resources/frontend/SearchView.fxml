@@ -4,42 +4,32 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.image.Image?>
 
-<AnchorPane prefHeight="500.0" prefWidth="750.0"
-            xmlns="http://javafx.com/javafx/21"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="frontend.SearchViewController">
+<AnchorPane prefHeight="500.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.SearchViewController">
 
     <children>
         <Text layoutX="300.0" layoutY="55.0" text="Search Cars">
             <font>
-                <Font size="30.0" />
+                <Font name="Georgia" size="30.0" />
             </font>
         </Text>
 
-        <TextField fx:id="searchField"
-                   layoutX="190.0"
-                   layoutY="95.0"
-                   prefHeight="30.0"
-                   prefWidth="280.0"
-                   promptText="Search cars" />
+        <TextField fx:id="searchField" layoutX="190.0" layoutY="95.0" prefHeight="30.0" prefWidth="280.0" promptText="Search cars">
+         <font>
+            <Font name="Georgia" size="12.0" />
+         </font></TextField>
 
-        <Button layoutX="490.0"
-                layoutY="95.0"
-                mnemonicParsing="false"
-                text="Search"
-                onAction="#searchCars" />
+        <Button layoutX="490.0" layoutY="95.0" mnemonicParsing="false" onAction="#searchCars" text="Search">
+         <font>
+            <Font name="Georgia" size="12.0" />
+         </font></Button>
 
-        <TableView fx:id="carTableView"
-                   layoutX="75.0"
-                   layoutY="150.0"
-                   prefHeight="250.0"
-                   prefWidth="600.0">
+        <TableView fx:id="carTableView" layoutX="75.0" layoutY="150.0" prefHeight="250.0" prefWidth="600.0">
 
             <columns>
                 <TableColumn fx:id="carColumn" prefWidth="150.0" text="Car" />
@@ -50,28 +40,26 @@
         </TableView>
 
         <!--This is for the car image in the search screen, image is in img folder-->
-        <ImageView fx:id="myImageView"
-                   layoutX="575.0"
-                   layoutY="20.0"
-                   fitHeight="100.0"
-                   fitWidth="150.0" 
-                   preserveRatio="true" >
+        <ImageView fx:id="myImageView" fitHeight="100.0" fitWidth="150.0" layoutX="575.0" layoutY="20.0" preserveRatio="true">
                    <image>
                        <Image url="@img/ford_must.png" />
                      </image>
         </ImageView>
 
 
-        <Button layoutX="210.0"
-                layoutY="430.0"
-                mnemonicParsing="false"
-                text="Add to Cart"
-                onAction="#addToCart" />    
+        <Button layoutX="536.0" layoutY="430.0" mnemonicParsing="false" onAction="#addToCart" text="Add to Cart">
+         <font>
+            <Font name="Georgia" size="12.0" />
+         </font></Button>    
 
-        <Button layoutX="390.0"
-                layoutY="430.0"
-                mnemonicParsing="false"
-                text="Main Menu"
-                onAction="#goToMainMenu" />
+        <Button layoutX="151.0" layoutY="430.0" mnemonicParsing="false" onAction="#goToMainMenu" text="Main Menu">
+         <font>
+            <Font name="Georgia" size="12.0" />
+         </font></Button>
+      <ImageView fx:id="logoImageView" fitHeight="161.0" fitWidth="157.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@img/logo.png" />
+         </image>
+      </ImageView>
     </children>
 </AnchorPane>

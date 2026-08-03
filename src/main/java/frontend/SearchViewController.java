@@ -51,9 +51,13 @@ public class SearchViewController {
     Image myImage = new Image("file:src/main/resources/frontend/img/ford_must.png");
 
     @FXML
+    ImageView logoImageView;
+    Image logoImage = new Image(getClass().getResourceAsStream("/frontend/img/logo.png"));
+    
+    @FXML
     public void displayImage() {
         myImageView.setImage(myImage);
-        
+        logoImageView.setImage(logoImage);        
     }
 
    

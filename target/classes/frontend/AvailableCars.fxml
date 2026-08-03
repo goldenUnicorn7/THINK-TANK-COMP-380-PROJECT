@@ -22,7 +22,7 @@
 
             <Label text="Available Cars">
                 <font>
-                    <Font name="Georgia" size="30.0" />
+                    <Font name="Georgia" size="28.0" />
                 </font>
             </Label>
 
@@ -67,17 +67,17 @@
             <HBox spacing="15.0">
                 <Button fx:id="addToCartButton" onAction="#addSelectedCarToCart" prefWidth="140.0" text="Add To Cart">
                <font>
-                  <Font name="Georgia" size="14.0" />
+                  <Font name="Georgia" size="12.0" />
                </font></Button>
 
                 <Button fx:id="goToCartButton" onAction="#goToCartScreen" prefWidth="140.0" text="Go To Cart">
                <font>
-                  <Font name="Georgia" size="14.0" />
+                  <Font name="Georgia" size="12.0" />
                </font></Button>
 
                 <Button fx:id="backButton" onAction="#goBackToMainPage" prefWidth="100.0" text="Back">
                <font>
-                  <Font name="Georgia" size="14.0" />
+                  <Font name="Georgia" size="12.0" />
                </font></Button>
             </HBox>
         </VBox>
