@@ -10,10 +10,22 @@ import java.util.List;
 import backend.db.DBConnection;
 import backend.model.Booking;
 
+/**
+ Data Access Object (DAO) class for managing bookings in the database.
+  */
 public class bookingDAO {
+
+    /**
+     Constructor for the bookingDAO class. Initializes a new instance of the bookingDAO.
+     */
     public bookingDAO() {
     }
 
+    /**
+     * Inserts a new booking into the database.
+       @param booking The Booking object containing the booking details to be inserted.
+       @return true if booking was successfully inserted, false otherwise.
+     */
     public boolean insertBooking(Booking booking) {
         String sql = "INSERT INTO Bookings (UserID, CarID, pickup_Date, return_Date, Total_price, Booking_Status) VALUES (?, ?, ?, ?, ?, ?)";
 
@@ -36,6 +48,11 @@ public class bookingDAO {
         }
     }
 
+    /**
+     * Retrieves a list of bookings associated with a specific user ID from the database.
+       @param userId The ID of the user for whom to retrieve bookings.
+       @return a list of Booking objects associated with the given user ID, or null if an error occurs.
+     */
     public List<Booking> getBookingByUserId(int userId) {
         String sql = "SELECT * FROM Bookings WHERE UserID = ?";
 
@@ -65,6 +82,11 @@ public class bookingDAO {
         return null;
     }
 
+    /**
+     * Retrieves a booking by its ID from the database.
+     * @param bookingId The ID of the booking to retrieve.
+     * @return matching Booking object if found, null otherwise.
+     */
     public Booking getBookingById(int bookingId) {
         String sql = "SELECT * FROM Bookings WHERE BookingID = ?";
 
@@ -93,6 +115,11 @@ public class bookingDAO {
         return null;
     }
 
+    /**
+     * Updates an existing booking in the database.
+     * @param booking The Booking object containing the updated booking details.
+     * @return true if the booking was successfully updated, false otherwise.
+     */
     public boolean updateBooking(Booking booking) {
         String sql = "UPDATE Bookings SET UserID = ?, CarID = ?, pickup_Date = ?, return_Date = ?, Total_price = ?, Booking_Status = ? WHERE BookingID = ?";
 
@@ -116,6 +143,11 @@ public class bookingDAO {
         }
     }
 
+    /**
+     * Deletes a booking from the database.
+     * @param bookingId The ID of the booking to delete.
+     * @return true if booking was successfully deleted, false otherwise.
+     */
     public boolean deleteBooking(int bookingId) {
         String sql = "DELETE FROM Bookings WHERE BookingID = ?";
 

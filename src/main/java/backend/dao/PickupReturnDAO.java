@@ -9,11 +9,22 @@ import java.sql.Timestamp;
 import backend.db.DBConnection;
 import backend.model.PickupReturn;
 
+/**
+ * Data Access Object (DAO) class for managing pickup and return records in the database.
+ */
 public class PickupReturnDAO {
 
+    /**
+     * Constructor for the PickupReturnDAO class. Initializes a new instance of the PickupReturnDAO.
+     */
     public PickupReturnDAO() {
     }
 
+    /**
+     * Inserts a new pickup and return record into the database.
+     * @param pickupReturn The PickupReturn object containing the record details.
+     * @return true if the record was successfully inserted, false otherwise.
+     */
     public boolean insertPickupReturn(PickupReturn pickupReturn) {
 
         String sql = "INSERT INTO Pickup_Return " +
@@ -39,6 +50,11 @@ public class PickupReturnDAO {
         }
     }
 
+    /**
+     * Retrieves a pickup and return record by its associated booking ID from the database.
+     * @param bookingId The ID of the booking for which to retrieve pickup and return records.
+     * @return The PickupReturn object if found, null otherwise.
+     */
     public PickupReturn getPickupReturnByBookingId(int bookingId) {
 
         String sql = "SELECT * FROM Pickup_Return WHERE BookingID = ?";
@@ -70,6 +86,11 @@ public class PickupReturnDAO {
         return null;
     }
 
+    /**
+     * Updates an existing pickup and return record in the database.
+     * @param pickupReturn The PickupReturn object containing the updated record details.
+     * @return true if the record was successfully updated, false otherwise.
+     */
     public boolean updatePickupReturn(PickupReturn pickupReturn) {
 
         String sql = "UPDATE Pickup_Return SET " +
@@ -99,6 +120,11 @@ public class PickupReturnDAO {
         }
     }
 
+    /**
+     * Deletes a pickup and return record from the database based on the associated booking ID.
+     * @param bookingId The ID of the booking for which to delete pickup and return records.
+     * @return true if the record was successfully deleted, false otherwise.
+     */
     public boolean deletePickupReturnByBookingId(int bookingId) {
 
         String sql = "DELETE FROM Pickup_Return WHERE BookingID = ?";
