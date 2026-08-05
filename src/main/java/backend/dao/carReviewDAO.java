@@ -11,11 +11,22 @@ import java.util.List;
 import backend.db.DBConnection;
 import backend.model.CarReview;
 
+/**
+ * Data Access Object (DAO) class for managing car reviews in the database. This class provides methods to perform CRUD operations on the Car_Reviews table.
+ */
 public class carReviewDAO {
 
+    /**
+     * Constructs a new carReviewDAO instance. This constructor initializes the DAO for managing car reviews in the database.
+     */
     public carReviewDAO() { 
     }
 
+    /**
+     * Inserts a new car review into the database.
+     * @param review The CarReview object containing the review details.
+     * @return true if the review was successfully inserted, false otherwise.
+     */
     public boolean insertReview(CarReview review) {
         String sql = "INSERT INTO Car_Reviews (CarID, UserID, BookingID, Rating, Comments, Review_Date) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection conn = DBConnection.getConnection();
@@ -34,6 +45,11 @@ public class carReviewDAO {
         }
     }
 
+    /**
+     * Retrieves a car review by its ID from the database.
+     * @param reviewId The ID of the review to retrieve.
+     * @return The CarReview object if found, null otherwise.
+     */
     public CarReview getReviewById(int reviewId) {
         String sql = "SELECT * FROM Car_Reviews WHERE ReviewID = ?";
        try (Connection conn = DBConnection.getConnection();
@@ -58,6 +74,11 @@ public class carReviewDAO {
         return null;
     }
 
+    /**
+     * Updates an existing car review in the database.
+     * @param review The CarReview object containing the updated review details.
+     * @return true if the review was successfully updated, false otherwise.
+     */
     public boolean updateReview(CarReview review) {
         String sql = "UPDATE Car_Reviews SET CarID = ?, UserID = ?, Rating = ?, Comments = ? WHERE ReviewID = ?";
         try (Connection conn = DBConnection.getConnection();
@@ -75,6 +96,11 @@ public class carReviewDAO {
         }
     }
 
+    /**
+     * Deletes a car review from the database.
+     * @param reviewId The ID of the review to delete.
+     * @return true if the review was successfully deleted, false otherwise.
+     */
     public boolean deleteReview(int reviewId) {
         String sql = "DELETE FROM Car_Reviews WHERE ReviewID = ?";
         try (Connection conn = DBConnection.getConnection();
@@ -88,6 +114,10 @@ public class carReviewDAO {
         }
     }
 
+    /**
+     * Retrieves all car reviews from the database.
+     * @return A list of all CarReview objects.
+     */
     public List<CarReview> getAllReviews() {
         String sql = "SELECT * FROM Car_Reviews";
         List<CarReview> reviews = new ArrayList<>();

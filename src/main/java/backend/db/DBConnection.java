@@ -4,6 +4,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+/**
+ * Utility class for managing database connections. This class provides a method to establish a connection to the MySQL database.
+ */
 public class DBConnection {
 
     private static final String URL =
@@ -12,6 +15,11 @@ public class DBConnection {
     private static final String USER = "root";
     private static final String PASSWORD = "1234";
 
+    /**
+     * Establishes a connection to the MySQL database.
+     * @return A Connection object representing the database connection.
+     * @throws SQLException If a database access error occurs or the JDBC driver is not found.
+     */
     public static Connection getConnection() throws SQLException {
 
         try {
