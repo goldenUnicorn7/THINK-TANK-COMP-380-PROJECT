@@ -10,8 +10,43 @@ import java.util.List;
 import backend.db.DBConnection;
 import backend.model.Car;
 
+/**
+ * Class Name: carDAO
+ * Date: July 4, 2026
+ * Programmer: Snigdha Bolisetty
+ *
+ * Description:
+ * Provides database access operations for car records in the car rental
+ * desktop application. This class retrieves all cars, searches for cars
+ * using a keyword, and finds a specific car by its database identifier.
+ *
+ * Important Functions:
+ * getAllCars() retrieves every car from the database, searchCars() filters
+ * cars using several vehicle attributes, and getCarById() retrieves one car.
+ * mapResultSetToCar() converts a database row into a Car model object.
+ *
+ * Important Data Structures:
+ * ArrayList and List are used to store collections of Car objects returned
+ * from the database. PreparedStatement is used to safely execute parameterized
+ * SQL queries.
+ *
+ * Algorithm:
+ * Each method opens a database connection, prepares and executes an SQL query,
+ * reads the ResultSet, converts matching rows into Car objects, and returns
+ * the resulting object or list.
+ *
+ * @author Snigdha Bolisetty
+ * @version 1.0
+ */
+
+
 public class carDAO {
 
+    /**
+     * Retrieves all cars from the database.
+     *
+     * @return A list of all Car objects in the database
+     */
     public List<Car> getAllCars() {
     List<Car> cars = new ArrayList<>();
 
@@ -42,6 +77,14 @@ public class carDAO {
     return cars;
 }
 
+/**
+     * Searches for cars in the database that match the given keyword.
+     * The search is performed on multiple car attributes, including brand,
+     * model, color, year, price, and availability.
+     *
+     * @param keyword The search keyword to filter cars
+     * @return A list of Car objects that match the search criteria
+     */
     public List<Car> searchCars(String keyword) {
         List<Car> cars = new ArrayList<>();
 
@@ -85,6 +128,12 @@ public class carDAO {
         return cars;
     }
 
+    /**
+     * Retrieves a car from the database by its unique identifier.
+     *
+     * @param carId The unique identifier for the car
+     * @return The Car object if found, or null if not found
+     */
     public Car getCarById(int carId) {
         String sql = """
                 SELECT CarID, CarBrand, CarModel, CarColor, CarYear, Price, Availability
@@ -111,6 +160,13 @@ public class carDAO {
         return null;
     }
 
+    /**
+     * Maps a ResultSet row to a Car object.
+     *
+     * @param rs The ResultSet containing car data
+     * @return A Car object populated with data from the ResultSet
+     * @throws SQLException If an SQL error occurs while accessing the ResultSet
+     */
     private Car mapResultSetToCar(ResultSet rs) throws SQLException {
         Car car = new Car();
 

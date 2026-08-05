@@ -1,21 +1,27 @@
 USE new_database;
 
+
 -- =====================================================
 -- TEST USER
 -- =====================================================
 
+// The Users table stores information about registered users, including their phone number, password, email, and name.
 INSERT INTO Users (
     UserPhoneNum,
     UserPassword,
     UserEmail,
     UserName
 )
+
+// The ON DUPLICATE KEY UPDATE clause ensures that if a user with the same email already exists, their information will be updated instead of creating a duplicate entry.
 VALUES (
     '1234567890',
     '1234',
     'test@example.com',
     'Test User'
 )
+
+// The ON DUPLICATE KEY UPDATE clause allows for updating specific columns of an existing record if a duplicate key is found, ensuring that the user's information remains current.
 ON DUPLICATE KEY UPDATE
     UserPhoneNum = '1234567890',
     UserPassword = '1234',

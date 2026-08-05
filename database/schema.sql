@@ -76,6 +76,8 @@ CREATE TABLE `Car` (
 -- BOOKINGS TABLE
 -- =====================================================
 
+// The Bookings table stores information about car bookings made by users. 
+//It includes foreign keys to the Users and Car tables, as well as constraints to ensure data integrity.
 CREATE TABLE `Bookings` (
     `BookingID` INT NOT NULL AUTO_INCREMENT,
     `UserID` INT NOT NULL,
@@ -85,6 +87,7 @@ CREATE TABLE `Bookings` (
     `Total_price` DECIMAL(10,2) NOT NULL,
     `Booking_Status` VARCHAR(45) NOT NULL DEFAULT 'Pending',
 
+// The Booking_Status column indicates the current status of the booking, such as 'Pending', 'Confirmed', or 'Cancelled'.
     PRIMARY KEY (`BookingID`),
 
     INDEX `fk_Bookings_Users_idx` (`UserID`),
@@ -114,6 +117,7 @@ CREATE TABLE `Bookings` (
 -- PICKUP AND RETURN TABLE
 -- =====================================================
 
+// The Pickup_Return table stores information about the pickup and return of cars for each booking.
 CREATE TABLE `Pickup_Return` (
     `record_id` INT NOT NULL AUTO_INCREMENT,
     `BookingID` INT NOT NULL,
@@ -123,6 +127,7 @@ CREATE TABLE `Pickup_Return` (
     `Extra_Charges` DECIMAL(10,2) NOT NULL DEFAULT 0.00,
     `return_Date_Time` DATETIME NULL,
 
+// The pickup_confirmed and return_Confirmed columns indicate whether the pickup and return have been confirmed, respectively.
     PRIMARY KEY (`record_id`),
 
     INDEX `fk_Pickup_Return_Bookings_idx` (`BookingID`),
@@ -147,6 +152,7 @@ CREATE TABLE `Pickup_Return` (
 -- VALUES (?, ?, ?, ?, ?)
 -- =====================================================
 
+// The Cart table stores information about the items in a user's shopping cart, including the user ID, car ID, pickup and return dates, and estimated price.
 CREATE TABLE `Cart` (
     `CartID` INT NOT NULL AUTO_INCREMENT,
     `UserID` INT NOT NULL,
@@ -155,6 +161,7 @@ CREATE TABLE `Cart` (
     `Pickup_Date` DATE NOT NULL,
     `estimated_price` DECIMAL(10,2) NOT NULL,
 
+// The estimated_price column represents the estimated cost of the rental based on the selected car and rental duration.
     PRIMARY KEY (`CartID`),
 
     INDEX `fk_Cart_Users_idx` (`UserID`),
@@ -184,6 +191,7 @@ CREATE TABLE `Cart` (
 -- CAR REVIEWS TABLE
 -- =====================================================
 
+// The Car_Reviews table stores reviews submitted by users for the cars they have rented.
 CREATE TABLE `Car_Reviews` (
     `ReviewID` INT NOT NULL AUTO_INCREMENT,
     `UserID` INT NOT NULL,
