@@ -22,6 +22,38 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
+/**
+ * Class Name: SearchViewController
+ * Date: August 4, 2026
+ * Co-Programmer: Jose Beltran
+ *
+ * Description:
+ * SearchViewController manages the search function of the car rental app.
+ * Users can search for cars by name. Currently it is set for table view,
+ * but we have a tilepane view already in the works.
+ *
+ * Important Functions:
+ * initialize() fetches all cars from the database and populates the TableView.
+ * loadAllCars() helper for initialize() to load all cars.
+ * searchCars() filters cars based on user input in the search field.
+ * addToCart() adds the selected car to the user's cart if logged in.
+ * goToMainMenu() navigates back to the main menu of the application.
+ *
+ * Important Data Structures:
+ * List<Car> holds the list of cars fetched from the database.
+ * ObservableList<Car>  used to translate List<Car> for JavaFX TableView.
+ * TableView<Car>  displays the list of cars in a table format.
+ *
+ * Algorithm:
+ * Load all cars from database from carDAO. Then we list those cars. That list is then 
+ * translated so that it can be displayed properly. When the user searches for a car, refresh
+ * with the current filters. When the user adds a car from 'add to cart', store the selected car
+ * for cart service to reference.  
+ *
+ * @co-authored Jose Beltran
+ * @version 1.0
+ */
+
 public class SearchViewController {
 
     @FXML
@@ -149,3 +181,48 @@ public class SearchViewController {
         stage.show();
     }
 }
+
+/*
+While not current apart of the program, these will be used to move to a more sleek design.
+Idea: Instead of a table view, we can use a tile pane to display the cars. 
+Each car will be represented as a card with its image, brand, model, price, and availability. 
+Users can click on a card to add the car to their cart.
+
+ public VBox createCarCard(Car car) {
+        VBox card = new VBox(8);
+        card.setPrefSize(350, 220);
+        card.setMinSize(350,220);
+        card.setMaxSize(350,220);
+        card.setStyle(
+                "-fx-background-color: white;" +
+                "-fx-border-color: #d0d0d0;" +
+                "-fx-border-radius: 12;" +
+                "-fx-background-radius: 12;" +
+                "-fx-padding: 15;"
+        );
+
+        Label brandLabel = new Label(car.getCarBrand());
+        brandLabel.setStyle("-fx-font-size: 22px; -fx-font-weight: bold;");
+
+        Label modelLabel = new Label(car.getCarModel());
+        Label peopleLabel = new Label("5 people");
+
+        Label priceLabel = new Label("$" + car.getPrice() + " per day");
+        priceLabel.setStyle("-fx-font-size: 22px; -fx-font-weight: bold;");
+
+        Label availabilityLabel = new Label(car.getAvailability());
+        availabilityLabel.setStyle("-fx-text-fill: green;");
+
+        VBox textBox = new VBox(6);
+        textBox.getChildren().addAll(brandLabel, modelLabel, peopleLabel);
+        
+        ImageView carImageView = new ImageView();
+        carImageView.setImage(getCarImage(car));
+        carImageView.setFitWidth(120);
+        carImageView.setFitHeight(80);
+        carImageView.setPreserveRatio(true);
+    
+        return card;
+}
+
+*/
