@@ -10,6 +10,40 @@ import backend.model.Booking;
 import backend.model.PickupReturn;
 
 /**
+ * Class Name: BookingService
+ * Date: July 4, 2026
+ * Programmer: Carla Garcia
+ * 
+ * Description: 
+ * Provides business logic for managing bookings and pickup/return records in the car rental 
+ * application. This service connects frontend controllers to the bookingDAO and PickupReturnDAO database-access 
+ * classes.
+ * 
+ * Important Functions: 
+ * createBooking() validates and creates a new booking.
+ * insertBooking() inserts a booking into the database.
+ * getBookingByUserId() retrieves bookings for a specific user.
+ * getBookingById() retrieves a booking by its ID.
+ * updateBooking() updates an existing booking.
+ * insertPickupReturn() inserts a pickup/return record.
+ * getPickupReturnByBookingId() retrieves a pickup/return record by booking ID.
+ * updatePickupReturn() updates an existing pickup/return record.
+ * 
+ * Important Data Structures: 
+ * The Booking and PickupReturn model classes store booking and pickup/return 
+ * information retrieved from or sent to the database. Lists of Booking objects are used to transfer multiple 
+ * booking records between the DAO layer and the frontend.
+ * 
+ * Algorithm: 
+ * Each method validates the provided input before delegating the database operation to bookingDAO or 
+ * PickupReturnDAO. The service ensures that bookings and pickup/return records are created, retrieved, updated, 
+ * and deleted correctly in the database.
+ * 
+ * @author Carla Garcia
+ * @version 1.0
+ */
+
+/**
  * Service class for managing bookings and pickup/return records. This class provides methods to interact with the bookingDAO and PickupReturnDAO for performing CRUD operations on bookings and pickup/return records.
  */
 public class BookingService {
@@ -26,7 +60,7 @@ public class BookingService {
     }
 
     /**
-     * Inserts a new booking into the database.
+     * Inserts a new booking into the database; delegates operation to bookingDAO.
      * @param booking The Booking object containing the booking details to be inserted.
      * @return true if booking was successfully inserted, false otherwise.
      */

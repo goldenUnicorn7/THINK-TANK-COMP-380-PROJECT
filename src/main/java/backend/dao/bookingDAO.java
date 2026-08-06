@@ -11,6 +11,34 @@ import backend.db.DBConnection;
 import backend.model.Booking;
 
 /**
+ * Class Name: bookingDAO
+ * Date: July 4, 2026
+ * Programmer: Carla Garcia
+ *
+ * Description:
+ * Provides database access operations for bookings in the car rental desktop application.
+ * This class handles inserting, retrieving, updating, and deleting bookings.
+ *
+ * Important Functions:
+ * insertBooking() inserts a new booking into the database.
+ * getBookingByUserId() retrieves bookings associated with a specific user ID.
+ * getBookingById() retrieves a booking by its ID.
+ * updateBooking() updates an existing booking in the database.
+ * deleteBooking() deletes a booking from the database.
+ *
+ * Important Data Structures:
+ * The Booking model class stores booking information retrieved from or sent to the database.
+ * PreparedStatement is used to safely execute parameterized SQL queries.
+ *
+ * Algorithm:
+ * Each method opens a database connection, prepares an SQL statement, assigns the required input parameters,
+ * executes the query or update, and returns the resulting Booking object or success value.
+ *
+ * @author Carla Garcia
+ * @version 1.0
+ */
+
+/**
  Data Access Object (DAO) class for managing bookings in the database.
   */
 public class bookingDAO {

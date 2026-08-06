@@ -10,6 +10,34 @@ import backend.db.DBConnection;
 import backend.model.PickupReturn;
 
 /**
+ * Class Name: PickupReturnDAO
+ * Date: July 4, 2026
+ * Programmer: Carla Garcia
+ *
+ * Description:
+ * Provides database access operations for pickup and return records in the car rental desktop application.
+ * This class handles inserting, retrieving, updating, and deleting pickup and return records.
+ *
+ * Important Functions:
+ * insertPickupReturn() inserts a new pickup and return record into the database.
+ * getPickupReturnByBookingId() retrieves a pickup and return record by its associated booking ID.
+ * updatePickupReturn() updates an existing pickup and return record in the database.
+ * deletePickupReturnByBookingId() deletes a pickup and return record based on the associated booking ID.
+ *
+ * Important Data Structures:
+ * The PickupReturn model class stores pickup and return information retrieved from or sent to the database.
+ * PreparedStatement is used to safely execute parameterized SQL queries.
+ *
+ * Algorithm:
+ * Each method opens a database connection, prepares an SQL statement, assigns the required parameters,
+ * executes the query or update, and returns the resulting PickupReturn object or success value. 
+ * PreparedStatement was used to prevent SQL injection attacks and ensure safe database operations.
+ *
+ * @author Carla Garcia
+ * @version 1.0
+ */
+
+/**
  * Data Access Object (DAO) class for managing pickup and return records in the database.
  */
 public class PickupReturnDAO {

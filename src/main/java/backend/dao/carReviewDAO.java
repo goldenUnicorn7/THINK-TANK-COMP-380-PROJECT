@@ -12,6 +12,35 @@ import backend.db.DBConnection;
 import backend.model.CarReview;
 
 /**
+ * Class Name: carReviewDAO
+ * Date: July 4, 2026
+ * Programmer: Carla Garcia
+ *
+ * Description:
+ * Provides database access operations for car reviews in the car rental application.
+ * This class handles inserting, retrieving, updating, and deleting car reviews.
+ *
+ * Important Functions:
+ * insertReview() inserts a new car review into the database.
+ * getReviewById() retrieves a car review by its ID.
+ * updateReview() updates an existing car review in the database.
+ * deleteReview() deletes a car review from the database.
+ * getAllReviews() retrieves all car reviews from the database.
+ *
+ * Important Data Structures:
+ * The CarReview model class stores review information retrieved from or sent to the database.
+ * PreparedStatement is used to safely execute parameterized SQL queries.
+ *
+ * Algorithm:
+ * Each method opens a database connection, prepares an SQL statement, assigns the required parameters,
+ * executes the query or update, and returns the resulting CarReview object(s) or success value. 
+ * PreparedStatement was used to prevent SQL injection attacks and ensure safe database operations.
+ *
+ * @author Carla Garcia
+ * @version 1.0
+ */
+
+/**
  * Data Access Object (DAO) class for managing car reviews in the database. This class provides methods to perform CRUD operations on the Car_Reviews table.
  */
 public class carReviewDAO {
