@@ -9,6 +9,18 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
+<!--
+Class Name: SearchView
+Date: August 4, 2026
+Co-Programmer: Jose Beltran
+
+Description: This is the SearchView.fxml file, which is the view for the search screen. 
+It contains a TextField for searching cars, a TableView for displaying the search results, 
+and buttons for adding to cart and going back to the main menu.
+
+@co-authored Jose Beltran
+@version 1.0
+-->
 
 <AnchorPane prefHeight="500.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.SearchViewController">
 
@@ -38,6 +50,14 @@
                 <TableColumn fx:id="availabilityColumn" prefWidth="150.0" text="Availability" />
             </columns>
         </TableView>
+
+        <!-- TableView is planned to be replaced with a TilePane for better visual representation 
+        of cars, but currently commented out due WIP. 
+        <ScrollPane layoutX="50.0" layoutY="225.0" prefHeight="850.0" prefWidth="825.0" fitToWidth="true">
+            <content>
+               <TilePane fx:id="carContainer" hgap="20.0" vgap="20.0" prefColumns="2" prefTileHeight="220.0" prefTileWidth="350.0" style="-fx-padding: 15;" />
+            </content>
+         </ScrollPane>-->
 
         <!--This is for the car image in the search screen, image is in img folder-->
         <ImageView fx:id="myImageView" fitHeight="100.0" fitWidth="150.0" layoutX="575.0" layoutY="20.0" preserveRatio="true">

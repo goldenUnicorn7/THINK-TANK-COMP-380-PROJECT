@@ -7,6 +7,36 @@ import backend.dao.carReviewDAO;
 import backend.model.CarReview;
 
 /**
+ * Class Name: ReviewService
+ * Date: July 4, 2026
+ * Programmer: Carla Garcia
+ * 
+ * Description: 
+ * Provides business logic for managing car reviews in the car rental application. This service 
+ * connects frontend controllers to the carReviewDAO database-access class.
+ * 
+ * Important Functions: 
+ * insertReview() validates and inserts a new car review.
+ * getReviewById() retrieves a review by its ID.
+ * updateReview() updates an existing review.
+ * deleteReview() deletes a review.
+ * getAllReviews() retrieves all reviews.
+ * 
+ * Important Data Structures: 
+ * The CarReview model class stores review information retrieved from or sent to the 
+ * database. Lists of CarReview objects are used to transfer multiple review records between the DAO layer and the 
+ * frontend.
+ * 
+ * Algorithm: 
+ * Each method delegates the requested database operation to carReviewDAO and returns the resulting 
+ * object(s) or success value. The service ensures that reviews are created, retrieved, updated, and deleted 
+ * correctly in the database.
+ * 
+ * @author Carla Garcia
+ * @version 1.0
+ */
+
+/**
  * Service class for managing car reviews. This class provides methods to interact with the carReviewDAO for performing CRUD operations on car reviews.
  */
 public class ReviewService {
