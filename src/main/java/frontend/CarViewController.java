@@ -17,6 +17,16 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
+/**
+ * CarViewController
+ * Date: July 8, 2026
+ * Programmers: Emily Honarchian, Snigdha Bolisetty
+ * Description: Manages the UI for viewing available cars, displays all cars in a table, allows user to add selected car to their cart, and can navigate to main menu.
+ * Functions: Methods in this class load and display list of available cars, logs car when selected and added to cart, and change screens to main menu.
+ * Data Structures: TableView<Car> - holds and displays list of cars, ObservableList<Car> - updates the TableView with any changes in available cars
+ * Algorithm: A car is loaded from the database and displayed in the table.
+ */
+
 public class CarViewController {
 
     @FXML
@@ -36,6 +46,9 @@ public class CarViewController {
 
     private final carDAO carDao = new carDAO();
 
+    /**
+     * Sets up the table columns and loads all cars from the database into the table when screen is initialized
+     */
     @FXML
     public void initialize() {
         System.out.println("CarViewController initialize() is running");
@@ -54,6 +67,10 @@ public class CarViewController {
         System.out.println("Cars loaded into table: " + carTableView.getItems().size());
     }
 
+    /**
+     * Navigates back to the main menu screen.
+     * @param event is the action event triggered by clicking the button.
+     */
     @FXML
     public void goToMainMenu(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("MainMenu.fxml"));
@@ -66,6 +83,10 @@ public class CarViewController {
         stage.show();
     }
 
+    /**
+     *Logs currently selected car when user adds it to their cart through the button.
+     * @param event is the action event triggered by clicking the button.
+     */
     @FXML
     public void addToCart(ActionEvent event) {
         Car selectedCar = carTableView.getSelectionModel().getSelectedItem();

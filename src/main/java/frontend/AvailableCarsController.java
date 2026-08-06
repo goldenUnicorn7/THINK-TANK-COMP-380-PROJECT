@@ -27,6 +27,16 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import javafx.stage.Stage;
 
+/**
+ * AvailableCarsController
+ * Date: July 12, 2026
+ * Programmers: Emily Honarchian, Snigdha Bolisetty
+ * Description: Manages the UI for looking through available cars, displays all cars in a table, allows user to search for cars and select cars to add to their cart, and can navigate to cart or main page.
+ * Functions: Methods in this class load and display list of available cars, search cars, add selected car to the cart, and change screens to cart or main page.
+ * Data Structures: TableView<Car> - holds and displays list of cars, ObservableList<Car> - updates the TableView with any changes in available cars
+ * Algorithm: Searching for cars is done by matching the searched keyword to the backend database.
+ */
+
 public class AvailableCarsController {
 
     private Parent root;
@@ -80,12 +90,18 @@ public class AvailableCarsController {
     @FXML
     private Label messageLabel;
 
+    /**
+     * Initializes the controller by setting up table columns and loading available cars.
+     */
     @FXML
     public void initialize() {
         setupTableColumns();
         loadCars();
     }
 
+    /**
+     *Connects table columns to the matching fields 
+     */
     private void setupTableColumns() {
         carIdColumn.setCellValueFactory(new PropertyValueFactory<>("carID"));
         brandColumn.setCellValueFactory(new PropertyValueFactory<>("carBrand"));
@@ -96,6 +112,9 @@ public class AvailableCarsController {
         statusColumn.setCellValueFactory(new PropertyValueFactory<>("availability"));
     }
 
+    /**
+     * Loads available cars and displays them in the table.
+     */
     private void loadCars() {
         try {
             List<Car> cars = carService.getAllCars();
@@ -116,6 +135,10 @@ public class AvailableCarsController {
         }
     }
 
+    /**
+     * Searches for cars based on the keyword entered in the search field.
+     * @param event is the action event triggered by clicking the search button.
+     */
     @FXML
     public void searchCars(ActionEvent event) {
         try {
@@ -143,6 +166,10 @@ public class AvailableCarsController {
         }
     }
 
+    /**
+     * Refreshes the list of available cars by clearing search field and reloading the list of cars.
+     * @param event is the event of clicking the refresh button.
+     */
     @FXML
     public void refreshCars(ActionEvent event) {
         if (searchField != null) {
@@ -152,6 +179,10 @@ public class AvailableCarsController {
         loadCars();
     }
 
+    /**
+     * Adds the selected car to the user's cart.
+     * @param event is the action event triggered by clicking the button.
+     */
     @FXML
     public void addSelectedCarToCart(ActionEvent event) throws IOException {
         Car selectedCar = availableCarsTable.getSelectionModel().getSelectedItem();
@@ -183,6 +214,10 @@ public class AvailableCarsController {
         }
     }
 
+    /**
+     * Navigates to the cart view screen.
+     * @param event is the action event triggered by clicking the button.
+     */
     @FXML
     public void goToCartScreen(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/frontend/CartView.fxml"));
@@ -194,6 +229,10 @@ public class AvailableCarsController {
         stage.show();
     }
 
+    /**
+     * Navigates back to the main page.
+     * @param event is the action event triggered by clicking the button.
+     */
     @FXML
     public void goBackToMainPage(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/frontend/MainPage.fxml"));

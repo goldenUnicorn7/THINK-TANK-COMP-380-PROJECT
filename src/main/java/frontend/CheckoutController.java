@@ -29,6 +29,15 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
+/**
+ * CheckoutController
+ * Date: July 12, 2026
+ * Programmers: Emily Honarchian, Snigdha Bolisetty
+ * Description: Manages the UI for checking out the user's cart, displays all cars in the cart in a table with pickup & return dates, allows users to select payment method, confirm booking, and can navigate to cart or confirmation screen.
+ * Functions: Methods in this class set up checkout table & payment methods, calculate total cost amount based on selected dates, confirm booking and navigate to confirmation screen or back to cart.
+ * Data Structures: TableView<Car> - holds and displays list of cars in the cart, ObservableList<Car> - updates the TableView with any changes in the cart
+ * Algorithm: Rental days are calculated from number of days between pickup & return dates
+ */
 public class CheckoutController {
 
     private Parent root;
@@ -84,10 +93,14 @@ public class CheckoutController {
     @FXML
     private Button backButton;
 
+    
     @FXML 
     ImageView logoImageView;
     Image logoImage = new Image(getClass().getResourceAsStream("/frontend/img/logo.png"));
     
+    /**
+     * Displays the logo image in the ImageView.
+     */
     @FXML
     public void displayImage() {
         logoImageView.setImage(logoImage);
@@ -96,6 +109,9 @@ public class CheckoutController {
 
     private ObservableList<Car> cartCars = FXCollections.observableArrayList();
 
+    /**
+     * Initializes the controller by setting up table columns, payment methods, default dates, and loading cart items.
+     */
     @FXML
     public void initialize() {
         System.out.println("CheckoutController initialize() running...");
@@ -109,6 +125,9 @@ public class CheckoutController {
         returnDatePicker.setOnAction(event -> updateTotalAmount());
     }
 
+    /**
+     * Sets up the table columns for the checkout table.
+     */
     private void setupTableColumns() {
         carIdColumn.setCellValueFactory(new PropertyValueFactory<>("carID"));
         brandColumn.setCellValueFactory(new PropertyValueFactory<>("carBrand"));
@@ -124,6 +143,9 @@ public class CheckoutController {
         );
     }
 
+    /**
+     * Sets up the available payment methods in the dropdown.
+     */
     private void setupPaymentMethods() {
         paymentMethodComboBox.getItems().clear();
         paymentMethodComboBox.getItems().addAll(
@@ -134,6 +156,9 @@ public class CheckoutController {
         );
     }
 
+    /**
+     * Sets default pickup and return dates in the date pickers.
+     */
     private void setDefaultDates() {
         LocalDate today = LocalDate.now();
 
@@ -141,6 +166,9 @@ public class CheckoutController {
         returnDatePicker.setValue(today.plusDays(1));
     }
 
+    /**
+     * Loads the cars in the user's cart and displays them in the checkout table.
+     */
     private void loadCartCars() {
         try {
             List<Car> cars = cartService.getCartCars(loggedInUserId);
@@ -166,6 +194,10 @@ public class CheckoutController {
         }
     }
 
+    /**
+     * Calculates the number of rental days based on the selected pickup and return dates.
+     * @return the number of rental days, minimum 1 day.
+     */
     private int calculateDays() {
         LocalDate pickupDate = pickupDatePicker.getValue();
         LocalDate returnDate = returnDatePicker.getValue();
@@ -183,6 +215,10 @@ public class CheckoutController {
         return (int) days;
     }
 
+    /**
+     * Calculates the total cost for the cars in the cart based on the rental days.
+     * @return the total cost for the rentals.
+     */
     private double calculateTotalAmount() {
         int days = calculateDays();
         double total = 0.0;
@@ -194,6 +230,9 @@ public class CheckoutController {
         return total;
     }
 
+    /**
+     * Updates the total amount label based on the current cart items and selected dates.
+     */
     private void updateTotalAmount() {
         double total = calculateTotalAmount();
 
@@ -206,6 +245,10 @@ public class CheckoutController {
         }
     }
 
+    /**
+     * validates checkout inputs, books the cars from the cart and navigates to confirmation screen
+     * @param event is the event triggered by clicking the confirm booking button.
+     */
     @FXML
     public void confirmBooking(ActionEvent event) {
         try {
@@ -285,8 +328,14 @@ public class CheckoutController {
         }
     }
 
-
-    // navigate to confirmation screen
+    /**
+     * Navigates to confirmation screen.
+     * @param event the the event that triggers navigation to screen.
+     * @param purchasedCars the list of cars that were booked.
+     * @param days the number of rental days.
+     * @param totalAmount the total amount for the booking.
+     * 
+     */
     @FXML 
     public void goToConfirmationScreen(ActionEvent event, List<Car> purchasedCars, int days, double totalAmount) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/frontend/ConfirmationScreen.fxml"));
@@ -302,6 +351,10 @@ public class CheckoutController {
         stage.show();
     }
 
+    /**
+     * Navigates back to the cart view screen.
+     * @param event is the action event triggered by clicking the button.
+     */
     @FXML
     public void goBackToCart(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/frontend/CartView.fxml"));

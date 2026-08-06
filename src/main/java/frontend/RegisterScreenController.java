@@ -18,7 +18,15 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
-
+/**
+ * RegisterScreenController
+ * Date: July 27, 2026
+ * Programmer: Emily Honarchian, Snigdha Bolisetty
+ * Description: Manages the UI for the registration screen. It verifies a new user's email & passowrd, and will also navigate user to login screen if customer is already a verified user. 
+ * Functions: The methods validate the registration input from the user, create display/placeholder account name, logs in the new account or allows signing in to existing account, changes the screens based on user inputs, displays an image and gives error message alerts to the user. 
+ * Data Structures: No important data structures
+ * Algorithm: Checks to see if email matches a pattern, and is used because it is only one field that needs to be checked.
+ */
 public class RegisterScreenController {
 
     @FXML
@@ -33,10 +41,14 @@ public class RegisterScreenController {
     @FXML
     private Button signUpButton;
 
+    
     @FXML 
     ImageView logoImageView;
     Image logoImage = new Image(getClass().getResourceAsStream("/frontend/img/logo.png"));
     
+    /**
+     * Displays image (logo) on the screen
+     */
     @FXML
     public void displayImage() {
         logoImageView.setImage(logoImage);

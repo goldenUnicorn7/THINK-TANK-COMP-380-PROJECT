@@ -27,6 +27,15 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import javafx.stage.Stage;
 
+/**
+ * CartViewController
+ * Date: June 30, 2026
+ * Programmers: Emily Honarchian, Snigdha Bolisetty
+ * Description: Manages the UI for viewing the user's cart, displays all cars in the cart in a table, allows user to remove cars from their cart, and can navigate to checkout or main page.
+ * Functions: Methods in this class load and display list of cars in the cart, remove selected car from the cart, and change screens to checkout or main page.
+ * Data Structures: TableView<Car> - holds and displays list of cars in the cart, ObservableList<Car> - updates the TableView with any changes in the cart
+ * Algorithm: A car is removed from the table if it is successfully removed from the cart in the backend database.
+ */
 public class CartViewController {
 
     private Parent root;
@@ -69,12 +78,18 @@ public class CartViewController {
 
     private ObservableList<Car> cartCars = FXCollections.observableArrayList();
 
+    /**
+     * Sets up the table columns and loading the cart items by initializing the controller.
+     */
     @FXML
     public void initialize() {
         setupTableColumns();
         loadCartItems();
     }
 
+    /**
+     * Sets up the table columns for the cart table.
+     */
     private void setupTableColumns() {
         carColumn.setCellValueFactory(new PropertyValueFactory<>("carBrand"));
         modelColumn.setCellValueFactory(new PropertyValueFactory<>("carModel"));
@@ -88,6 +103,9 @@ public class CartViewController {
         );
     }
 
+    /**
+     * Loads the cart items for the logged-in user and displays them in the table.
+     */
     private void loadCartItems() {
         try {
             List<Car> cars = cartService.getCartCars(loggedInUserId);
@@ -110,8 +128,12 @@ public class CartViewController {
         }
     }
 
+    /**
+     * Navigates to the checkout screen.
+     * @param event is the action event triggered by clicking the checkout button.
+     */
     @FXML
-public void checkout(ActionEvent event) throws IOException {
+    public void checkout(ActionEvent event) throws IOException {
     FXMLLoader loader = new FXMLLoader(getClass().getResource("/frontend/Checkout.fxml"));
     root = loader.load();
 
@@ -121,6 +143,10 @@ public void checkout(ActionEvent event) throws IOException {
     stage.show();
 }
 
+    /**
+     * Navigates back to the main page.
+     * @param event is the action event triggered by clicking the main menu button.
+     */
     @FXML
     public void goToMainMenu(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/frontend/MainPage.fxml"));
@@ -132,6 +158,10 @@ public void checkout(ActionEvent event) throws IOException {
         stage.show();
     }
 
+    /**
+     * Navigates to the available cars screen.
+     * @param event is the action event triggered by clicking the available cars button.
+     */
     @FXML
     public void goToAvailableCars(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/frontend/AvailableCars.fxml"));
@@ -143,6 +173,10 @@ public void checkout(ActionEvent event) throws IOException {
         stage.show();
     }
 
+    /**
+     * Removes the selected car from the user's cart.
+     * @param event is the action event triggered by clicking the remove button.
+     */
     @FXML
     public void removeSelectedCar(ActionEvent event) {
         Car selectedCar = cartTable.getSelectionModel().getSelectedItem();

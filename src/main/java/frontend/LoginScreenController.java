@@ -19,6 +19,15 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
+/**
+ * LoginScreenController
+ * Date: June 30, 2026
+ * Programmer: Emily Honarchian, Snigdha Bolisetty
+ * Description: Manages the UI for the login screen. It verifies a user's email & password, and will also navigate user to main page screen if log in is successful.
+ * Functions: The methods validate the login input from the user, logs in the account, changes the screens based on user inputs, displays an image and gives error message alerts to the user. 
+ * Data Structures: No important data structures
+ * Algorithm: Login checks email and password against UserService for verification, and is used because it is only two fields that need to be checked.
+ */
 public class LoginScreenController {
 
     @FXML
@@ -37,6 +46,9 @@ public class LoginScreenController {
     ImageView logoImageView;
 
     Image logoImage = new Image(getClass().getResourceAsStream("/frontend/img/logo.png"));
+    /**
+     * Displays image (logo) on the screen
+     */
     @FXML
     public void displayImage() {
         logoImageView.setImage(logoImage);
@@ -50,7 +62,9 @@ public class LoginScreenController {
     private Stage stage;
     private Scene scene;
 
-
+    /**
+     * Login button styling setup
+     */
     @FXML
     public void initialize() {
         // This is for styling buttons. was testing
@@ -66,7 +80,10 @@ public class LoginScreenController {
         });
     }
 
-
+    /**
+     * verifies email and password, logs in user, navigates to main page
+     * @param event event triggered by clicking the login button.
+     */
     @FXML
     public void loginUser(ActionEvent event) throws IOException {
         String email = userName.getText();
@@ -101,6 +118,10 @@ public class LoginScreenController {
         }
     }
 
+    /**
+     * Navigates to the main page screen.
+     * @param event event triggered by clicking the button.
+     */
     private void goToMainPage(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(
                 getClass().getResource("/frontend/MainPage.fxml")
@@ -116,6 +137,10 @@ public class LoginScreenController {
         
     }
 
+    /**
+     * displays message on login screen
+     * @param message the message displayed on the screen.
+     */
     private void showMessage(String message) {
         if (messageLabel != null) {
             messageLabel.setText(message);
