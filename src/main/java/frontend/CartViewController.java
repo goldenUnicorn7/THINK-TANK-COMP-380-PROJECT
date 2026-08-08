@@ -1,30 +1,24 @@
 package frontend;
 
-import backend.model.Car;
-import backend.service.CartService;
-
 import java.io.IOException;
 import java.util.List;
 
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
+import backend.model.Car;
+import backend.service.CartService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
-
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 /**
@@ -43,23 +37,13 @@ public class CartViewController {
     private Scene scene;
 
     private final CartService cartService = new CartService();
-
     private int loggedInUserId = 1;
 
     @FXML
-    private TableView<Car> cartTable;
+    private VBox cartItemsContainer;
 
     @FXML
-    private TableColumn<Car, String> carColumn;
-
-    @FXML
-    private TableColumn<Car, String> modelColumn;
-
-    @FXML
-    private TableColumn<Car, Integer> daysColumn;
-
-    @FXML
-    private TableColumn<Car, Double> totalColumn;
+    private Label totalLabel;
 
     @FXML
     private Button mainMenuButton;
@@ -76,32 +60,31 @@ public class CartViewController {
     @FXML
     private Label messageLabel;
 
-    private ObservableList<Car> cartCars = FXCollections.observableArrayList();
 
     /**
      * Sets up the table columns and loading the cart items by initializing the controller.
      */
     @FXML
     public void initialize() {
-        setupTableColumns();
         loadCartItems();
     }
 
+    @FXML 
+    ImageView logoImageView;
+    Image logoImage = new Image(getClass().getResourceAsStream("/frontend/img/logo.png"));
+    
+    /**
+     * Displays image (logo) on the screen
+     */
+    @FXML
+    public void displayImage() {
+        logoImageView.setImage(logoImage);
+        
+    }
     /**
      * Sets up the table columns for the cart table.
      */
-    private void setupTableColumns() {
-        carColumn.setCellValueFactory(new PropertyValueFactory<>("carBrand"));
-        modelColumn.setCellValueFactory(new PropertyValueFactory<>("carModel"));
 
-        daysColumn.setCellValueFactory(cellData ->
-                new SimpleIntegerProperty(1).asObject()
-        );
-
-        totalColumn.setCellValueFactory(cellData ->
-                new SimpleDoubleProperty(cellData.getValue().getPrice()).asObject()
-        );
-    }
 
     /**
      * Loads the cart items for the logged-in user and displays them in the table.
@@ -110,8 +93,17 @@ public class CartViewController {
         try {
             List<Car> cars = cartService.getCartCars(loggedInUserId);
 
-            cartCars = FXCollections.observableArrayList(cars);
-            cartTable.setItems(cartCars);
+            cartItemsContainer.getChildren().clear();
+            double totalPrice = 0.0;
+
+            for(Car car : cars) {
+                cartItemsContainer.getChildren().add(createCartItemCard(car));
+                totalPrice += car.getPrice();
+            }
+
+            if(totalLabel != null) {
+                totalLabel.setText(String.format("Total: $%.2f", totalPrice));
+            }
 
             System.out.println("Cart items loaded: " + cars.size());
 
@@ -127,6 +119,83 @@ public class CartViewController {
             }
         }
     }
+
+    private HBox createCartItemCard(Car car) {
+        HBox itemCard = new HBox(20);
+        itemCard.setAlignment(Pos.CENTER_LEFT);
+        itemCard.setPrefSize(600, 110);
+        itemCard.setStyle(
+            "-fx-border-color: black;" +
+            "-fx-border-width: 1;" +
+            "-fx-background-color: #f0f0f0;"
+        );
+
+        ImageView carImage = new ImageView(getCarImage(car));
+        carImage.setFitHeight(80);
+        carImage.setFitWidth(120);
+        carImage.setPreserveRatio(true);
+        
+        Label carNameLabel = new Label(car.getCarBrand() + " " + car.getCarModel());
+        carNameLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
+
+        Label priceLabel = new Label("$" + String.format("%.2f", car.getPrice()));
+        priceLabel.setStyle("-fx-font-size: 16px;");
+
+        Label daysLabel = new Label("Days 1");
+
+        Button removeButton = new Button("Remove");
+        removeButton.setOnAction(event -> {
+        boolean removed = cartService.removeFromCart(loggedInUserId, car.getCarID());
+
+        if (removed) {
+            if (messageLabel != null) {
+                messageLabel.setText("Car removed from cart.");
+            }
+
+            loadCartItems();
+        } else {
+            if (messageLabel != null) {
+                messageLabel.setText("Could not remove car.");
+            }
+        }
+     });
+
+        VBox infoBox = new VBox(8);
+        infoBox.getChildren().addAll(carNameLabel, daysLabel, removeButton);
+
+        Region spacer = new Region();
+        spacer.setPrefWidth(170);
+
+        VBox priceBox = new VBox(8);
+        priceBox.setAlignment(Pos.CENTER_RIGHT);
+        priceBox.getChildren().add(priceLabel);
+
+        itemCard.getChildren().addAll(carImage, infoBox, spacer, priceBox);
+
+        return itemCard;
+    }
+
+    private Image getCarImage(Car car) {
+        String brand = car.getCarBrand().toLowerCase();
+        String model = car.getCarModel().toLowerCase();
+
+        String imagePath;
+
+        if (brand.contains("ford") && model.contains("must")) {
+            imagePath = "/frontend/img/ford_must.png";
+        } else if (brand.contains("honda")) {
+            imagePath = "/frontend/img/hondacivic.png";
+        } else if (brand.contains("tesla")) {
+            imagePath = "/frontend/img/teslamodel3.png";
+        } else if (brand.contains("toyota")) {
+            imagePath = "/frontend/img/toyotaCamry.png";
+        } else {
+            imagePath = "/frontend/img/default_car.png";
+        }
+
+        return new Image(getClass().getResourceAsStream(imagePath));
+    }
+
 
     /**
      * Navigates to the checkout screen.
@@ -177,30 +246,5 @@ public class CartViewController {
      * Removes the selected car from the user's cart.
      * @param event is the action event triggered by clicking the remove button.
      */
-    @FXML
-    public void removeSelectedCar(ActionEvent event) {
-        Car selectedCar = cartTable.getSelectionModel().getSelectedItem();
-
-        if (selectedCar == null) {
-            if (messageLabel != null) {
-                messageLabel.setText("Please select a car to remove.");
-            }
-            return;
-        }
-
-        boolean removed = cartService.removeFromCart(loggedInUserId, selectedCar.getCarID());
-
-        if (removed) {
-            cartCars.remove(selectedCar);
-            cartTable.refresh();
-
-            if (messageLabel != null) {
-                messageLabel.setText("Car removed from cart.");
-            }
-        } else {
-            if (messageLabel != null) {
-                messageLabel.setText("Could not remove car.");
-            }
-        }
-    }
+    
 }

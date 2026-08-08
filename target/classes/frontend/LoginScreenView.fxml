@@ -40,7 +40,7 @@
             <Font name="Georgia" size="17.0" />
          </font>
       </Label>
-      <ImageView fx:id="logoImageView" fitHeight="169.0" fitWidth="169.0" layoutX="430.0" layoutY="237.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="logoImageView" fitHeight="172.0" fitWidth="172.0" layoutX="5.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@img/logo.png" />
          </image>

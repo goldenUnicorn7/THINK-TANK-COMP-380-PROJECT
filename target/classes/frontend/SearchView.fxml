@@ -9,6 +9,8 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.TilePane?>
 <!--
 Class Name: SearchView
 Date: August 4, 2026
@@ -41,42 +43,17 @@ and buttons for adding to cart and going back to the main menu.
             <Font name="Georgia" size="12.0" />
          </font></Button>
 
-        <TableView fx:id="carTableView" layoutX="75.0" layoutY="150.0" prefHeight="250.0" prefWidth="600.0">
-
-            <columns>
-                <TableColumn fx:id="carColumn" prefWidth="150.0" text="Car" />
-                <TableColumn fx:id="modelColumn" prefWidth="150.0" text="Model" />
-                <TableColumn fx:id="priceColumn" prefWidth="150.0" text="Price" />
-                <TableColumn fx:id="availabilityColumn" prefWidth="150.0" text="Availability" />
-            </columns>
-        </TableView>
-
-        <!-- TableView is planned to be replaced with a TilePane for better visual representation 
-        of cars, but currently commented out due WIP. 
-        <ScrollPane layoutX="50.0" layoutY="225.0" prefHeight="850.0" prefWidth="825.0" fitToWidth="true">
+        <ScrollPane layoutX="50.0" layoutY="200.0" prefHeight="850.0" prefWidth="825.0" fitToWidth="true">
             <content>
                <TilePane fx:id="carContainer" hgap="20.0" vgap="20.0" prefColumns="2" prefTileHeight="220.0" prefTileWidth="350.0" style="-fx-padding: 15;" />
             </content>
-         </ScrollPane>-->
+         </ScrollPane>   
 
-        <!--This is for the car image in the search screen, image is in img folder-->
-        <ImageView fx:id="myImageView" fitHeight="100.0" fitWidth="150.0" layoutX="575.0" layoutY="20.0" preserveRatio="true">
-                   <image>
-                       <Image url="@img/ford_must.png" />
-                     </image>
-        </ImageView>
-
-
-        <Button layoutX="536.0" layoutY="430.0" mnemonicParsing="false" onAction="#addToCart" text="Add to Cart">
-         <font>
-            <Font name="Georgia" size="12.0" />
-         </font></Button>    
-
-        <Button layoutX="151.0" layoutY="430.0" mnemonicParsing="false" onAction="#goToMainMenu" text="Main Menu">
+        <Button layoutX="540.0" layoutY="95.0" mnemonicParsing="false" onAction="#goToMainMenu" text="Main Menu">
          <font>
             <Font name="Georgia" size="12.0" />
          </font></Button>
-      <ImageView fx:id="logoImageView" fitHeight="161.0" fitWidth="157.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="logoImageView" fitHeight="172.0" fitWidth="172.0" layoutX="5.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@img/logo.png" />
          </image>
