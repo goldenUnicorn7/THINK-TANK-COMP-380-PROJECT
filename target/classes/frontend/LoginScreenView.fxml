@@ -12,7 +12,7 @@
 <!-- Style was used to change bg of page -->
 <!-- buttons need ids so that they can change style on hover -->
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #c2ecff;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.LoginScreenController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0"  xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.LoginScreenController">
    <children>
       <Label alignment="CENTER" layoutY="35.0" prefHeight="17.0" prefWidth="600.0" text="Welcome!">
          <font>

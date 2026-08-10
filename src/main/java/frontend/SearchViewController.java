@@ -70,6 +70,9 @@ public class SearchViewController {
     private final CartService cartService = new CartService();
 
     @FXML
+    private Label messageLabel;
+
+    @FXML
     ImageView logoImageView;
     Image logoImage = new Image(getClass().getResourceAsStream("/frontend/img/logo.png"));
     
@@ -124,7 +127,19 @@ public class SearchViewController {
         topRow.getChildren().addAll(textBox, carImageView);
 
         Button addButton = new Button("Add to Cart");
-        addButton.setOnAction(event -> addToCart(car));
+        addButton.setOnAction(event -> {
+            boolean success = addToCart(car);
+            if (success) {
+                messageLabel.setText("Car added to cart successfully!");
+                messageLabel.setStyle("-fx-text-fill: green;");
+
+                addButton.setDisable(true);
+                addButton.setText("Added");
+            } else {
+                messageLabel.setText("Failed to add car to cart.");
+                messageLabel.setStyle("-fx-text-fill: red;");
+            }
+        });
 
         Region spacer = new Region();
         spacer.setPrefHeight(5);
@@ -199,15 +214,15 @@ public class SearchViewController {
     }
 
     @FXML
-    public void addToCart(Car selectedCar) {
+    public boolean addToCart(Car selectedCar) {
 
         if (selectedCar == null) {
             System.out.println("No car selected.");
-            return;
+            return false;
         }
         if (session.getCurrentUser() == null) {
             System.out.println("No logged-in user found.");
-            return;
+            return false;
         }
 
         int userId = session.getCurrentUser().getUserId();
@@ -217,8 +232,10 @@ public class SearchViewController {
 
         if (added) {
             System.out.println("Car added to cart from card.");
+            return true;
         } else {
             System.out.println("Failed to add car to cart from card.");
+            return false;
         }
     }
 

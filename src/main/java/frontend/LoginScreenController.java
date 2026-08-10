@@ -69,15 +69,7 @@ public class LoginScreenController {
     public void initialize() {
         // This is for styling buttons. was testing
         // if we dont like it we can remove it/change it.
-        loginButton.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold;");
-
-        loginButton.setOnMouseEntered(event -> {
-            loginButton.setStyle("-fx-background-color: #a04588; -fx-text-fill: white; -fx-font-weight: bold;");
-        });
-
-        loginButton.setOnMouseExited(event -> {
-            loginButton.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold;");
-        });
+        
     }
 
     /**

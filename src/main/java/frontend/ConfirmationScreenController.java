@@ -62,7 +62,8 @@ public class ConfirmationScreenController {
         modelColumn.setCellValueFactory(new PropertyValueFactory<>("carModel"));
         priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
 
-        daysColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(receiptDays).asObject());
+        daysColumn.setCellValueFactory(cellData -> 
+            new SimpleIntegerProperty(receiptDays).asObject());
 
         totalPriceColumn.setCellValueFactory(cellData ->
                 new SimpleDoubleProperty(cellData.getValue().getPrice() * receiptDays).asObject()
@@ -70,6 +71,15 @@ public class ConfirmationScreenController {
     }
 
     public void setReceiptData(List<Car> purchasedCars, int days, double totalPrice) {
+        this.receiptDays = days;
+
+        daysColumn.setCellValueFactory(cellData -> 
+            new SimpleIntegerProperty(receiptDays).asObject());
+
+        totalPriceColumn.setCellValueFactory(cellData ->
+                new SimpleDoubleProperty(cellData.getValue().getPrice() * receiptDays).asObject()
+        );
+
         receiptTable.setItems(FXCollections.observableArrayList(purchasedCars));
         receiptTable.refresh();
     }

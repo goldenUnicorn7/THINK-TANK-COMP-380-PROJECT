@@ -37,13 +37,13 @@
             </content>
         </ScrollPane>
 
-        <Label layoutX="520.0"
+        <!-- <Label layoutX="520.0"
                layoutY="445.0"
                text="TOTAL">
             <font>
                 <Font name="Georgia" size="16.0" />
             </font>
-        </Label>
+        </Label> -->
 
         <Label fx:id="totalLabel"
                layoutX="600.0"
