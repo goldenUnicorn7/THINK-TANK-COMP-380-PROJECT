@@ -101,6 +101,7 @@ public class bookingDAO {
                         rs.getBigDecimal("Total_price"),
                         rs.getString("Booking_Status")));
             }
+            return bookings;
 
         } catch (SQLException e) {
             System.out.println("Get Booking by ID database error.");
